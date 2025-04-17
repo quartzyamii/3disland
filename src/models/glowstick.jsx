@@ -12,7 +12,7 @@ import glowstickScene from '../assets/3d/glowstick.gltf';
 const Glowstick = (props) => {  // 컴포넌트 이름을 대문자로 수정
   const glowstickRef = useRef();  
 
-  const { nodes, materials } = useGLTF("/assets/3d/glowstick.gltf");  
+  const { nodes, materials } = useGLTF('../assets/3d/glowstick.gltf');  
 
   return (
     <a.group ref={glowstickRef} {...props}>  {/* ref 이름 수정 */}

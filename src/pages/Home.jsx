@@ -1,6 +1,7 @@
-import Suspense from 'react';
+import React, { Suspense } from 'react';
 import {Canvas} from '@react-three/fiber'
 import Loader from '../components/Loader'
+
  
 import Glowstick from '../models/glowstick';
 

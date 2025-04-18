@@ -7,15 +7,15 @@ import { useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { a } from '@react-spring/three';
 
-import glowstickScene from '../assets/3d/glowstick.gltf';
+import glowstickScene from '/assets/3d/glowstick.gltf?url';  
 
 const Glowstick = (props) => {  // 컴포넌트 이름을 대문자로 수정
   const glowstickRef = useRef();  
 
-  const { nodes, materials } = useGLTF('../assets/3d/glowstick.gltf');  
+  const { nodes, materials } = useGLTF(glowstickScene);  
 
   return (
-    <a.group ref={glowstickRef} {...props}>  {/* ref 이름 수정 */}
+    <a.group ref={glowstickRef} {...props}>  
       <mesh
         geometry={nodes.Torus004.geometry}
         material={materials.매테리얼}

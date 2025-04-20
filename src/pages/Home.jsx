@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
-import {Canvas} from '@react-three/fiber'
-import Loader from '../components/Loader'
+import React, { useState, Suspense } from 'react';
+import {Canvas} from '@react-three/fiber';
+import Loader from '../components/Loader';
 
+// import Sky from '../models/sky';
 import MeshGround2 from '../models/MeshGround2';
 import Glowstick from '../models/glowstick';
 
@@ -11,33 +12,48 @@ import Glowstick from '../models/glowstick';
             </di v> */}
 
 const Home = () => {
+  const [isRotating, setIsRotating] = useState(false);
   //화면위치,스케일조정(편집중)
-  // const adjustGlowstickForScreensize = () => {
-  //   let screenScale, screenPosition;
-  // }
+    const adjustMeshGround2ForScreensize = () => {
+      let screenScale = null;
+      let screenPosition = [0, -7, -50];
+      let rotation = [0.1, 4.7, 0 ];
 
-  // if (window.innerWidth < 768) {
-  //   screenScale = [0.9,0.9,0.9];
-  //   screenPosition = [0,-6.5,-4.3];
-  // } else {
-  //   screenScale = [1,1,1];
-  //   screenPosition = [0,-6.5,-4.3];
-  // }
+      if (window.innerWidth < 768) {
+        screenScale = [8,8,8];
+      } else {
+        screenScale = [12,12,12];
+      }
+
+      return [ screenScale, screenPosition, rotation];
+    }
+
+    const [MeshGroundScale, MeshGroundPosition, MeshGroundRotation ] = adjustMeshGround2ForScreensize();
+
     return (
         <section className = "w-full h-screen relative">
             {/* 3D 장면 */}
             <Canvas 
-              className = "w-full h-screen bg transparent"
+              className = {"w-full h-screen bg transparent ${isRotating ? 'cursor-grabbing : 'cursor-grab'}"}
               camera = {{near : 0.1, far : 1000 ,position : [0,0,5]}}
             >
               <Suspense fallback ={<Loader />}>
-                <directionalLight  />
-                <ambientLight  />
-                <pointLight  />
-                <spotLight  />
-                <hemisphereLight  />
+                <directionalLight position={[1,1,5]} intensity={1} />
+                <ambientLight intensity={0.3} />
+                {/* <pointLight  />
+                <spotLight  /> */}
+                <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={0.5} />
                 <Glowstick position={[0, 0, 0]} scale={[0.5, 0.5, 0.5]} />
-                <MeshGround2 position={[0, 0, 0]} scale={[1, 1, 1]} />
+
+                {/* <Sky /> */}
+
+                <MeshGround2 
+                position={MeshGroundPosition} 
+                scale={MeshGroundScale} 
+                rotation = {MeshGroundRotation}
+                isRotating={isRotating}
+                setIsRotating={setIsRotating}
+                />
               </Suspense>
             </Canvas>
         </section>

@@ -13,6 +13,7 @@ const Glowstick = (props) => {  // 컴포넌트 이름을 대문자로 수정
   const glowstickRef = useRef();  
 
   const { nodes, materials } = useGLTF(glowstickScene);  
+  console.log(nodes, materials);
 
   return (
     <a.group ref={glowstickRef} {...props}>  

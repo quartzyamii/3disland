@@ -18,12 +18,15 @@ const Glowstick = (props) => {  // 컴포넌트 이름을 대문자로 수정
   return (
     <a.group ref={glowstickRef} {...props}>  
       <mesh
+      
         geometry={nodes.Torus004.geometry}
         material={materials.매테리얼}
         position={[2.851, -2.399, -5.733]}
         rotation={[-0.808, -0.28, -0.103]}
       />
       <mesh
+      castShadow
+      receiveShadow
         geometry={nodes.Stick.geometry}
         material={materials['매테리얼.001']}
         position={[0.253, 3.115, -1.444]}

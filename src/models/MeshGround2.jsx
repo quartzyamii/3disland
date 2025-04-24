@@ -259,9 +259,12 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
                 scale={[-0.014, -0.161, -0.014]}
             />
             <Glowstick 
-            position={[0, 1.15, 2]} 
-            scale={[0.15, 0.15, 0.15]} 
-            rotation={[Math.PI / 2, Math.PI / 2, 0]}/>
+            position={[0, 1.1, 2]} 
+            scale={[0.13, 0.13, 0.13]} 
+            rotation={[Math.PI / 2, Math.PI / 2, 0]}
+            castShadow
+            receiveShadow
+            />
 
             {/* End of Mesh Group */}
         </a.group>

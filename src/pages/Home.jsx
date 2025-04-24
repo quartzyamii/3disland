@@ -16,7 +16,7 @@ const Home = () => {
   //화면위치,스케일조정(편집중)
     const adjustMeshGround2ForScreensize = () => {
       let screenScale = null;
-      let screenPosition = [0, -7, -50];
+      let screenPosition = [0, -7, -48];
       let rotation = [0.1, 4.7, 0 ];
 
       if (window.innerWidth < 768) {
@@ -36,15 +36,30 @@ const Home = () => {
             <Canvas 
               className = {"w-full h-screen bg transparent ${isRotating ? 'cursor-grabbing : 'cursor-grab'}"}
               camera = {{near : 0.1, far : 1000 ,position : [0,0,5]}}
+              shadows
+              gl={{ antialias: true }}
             >
               <Suspense fallback ={<Loader />}>
-                <directionalLight position={[1,1,5]} intensity={1} />
+                <directionalLight 
+                position={[1,0.7,1]} 
+                intensity={1} 
+                castShadow 
+                shadow-mapSize-width={1024}  // 그림자 맵의 해상도를 높임
+                shadow-mapSize-height={1024}
+                shadow-camera-left={-50}   // 그림자 카메라 범위 설정
+                shadow-camera-right={50}   // 그림자 카메라 범위 설정
+                shadow-camera-top={50}     // 그림자 카메라 범위 설정
+                shadow-camera-bottom={-50} // 그림자 카메라 범위 설정
+                shadow-camera-near={0.1}   // 그림자 카메라 근거리
+                shadow-camera-far={500}    // 그림자 카메라 원거리
+                shadow-bias={-0.001}  // 그림자 위치 
+                />
+                
                 <ambientLight intensity={0.3} />
                 {/* <pointLight  />
                 <spotLight  /> */}
                 <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={0.5} />
-                {/* <Glowstick position={[0, 0, -40]} scale={[0.5, 0.5, 0.5]} /> */}
-
+                
                 {/* <Sky /> */}
 
                 <MeshGround2 

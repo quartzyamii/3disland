@@ -32,22 +32,24 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
       e.preventDefault();
       setIsRotating(false);
 
-      const clientX = e.touches 
-      ? e.touches[0].clientX 
-      : e.clientX;
-
-      const delta = (clientX - lastX.current) / viewport.width;
-       
-      MeshGround2Ref.current.rotation.y += delta * 0.01 * Math.PI;
-      lastX.current = clientX;
-      rotationSpeed.current = delta * 0.01 * Math.PI;
+      
     }
 
     const handlePointerMove = (e) => {
       e.stopPropagation();
       e.preventDefault();
 
-      if(isRotating) handlePointerUp(e); 
+      if(isRotating) {
+        const clientX = e.touches 
+        ? e.touches[0].clientX 
+        : e.clientX;
+
+        const delta = (clientX - lastX.current) / viewport.width;
+        
+        MeshGround2Ref.current.rotation.y += delta * 0.01 * Math.PI;
+        lastX.current = clientX;
+        rotationSpeed.current = delta * 0.01 * Math.PI;
+      }
       
     }
 
@@ -67,7 +69,22 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
       }
     }
 
-  
+    //움직이는 객체 설정시
+  //   useFrame(() =>{
+  //     if(!isRotating){
+  //       rotationSpeed.current *= dampingFactor;
+
+  //       if(Math.abs(rotationSpeed.current) < 0.001) {
+  //         rotationSpeed.current = 0;
+  //       }
+
+  //       MeshGround2Ref.current.rotation.y += rotationSpeed.current;
+  //     } else {
+  //       const rotation = MeshGround2Ref.current.rotation.y;
+  //     }
+  //   }
+  // )
+
     useEffect(() => {
       const canvas = gl.domElement;
       canvas.addEventListener('pointerdown', handlePointerDown);

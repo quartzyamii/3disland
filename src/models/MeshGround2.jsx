@@ -4,6 +4,7 @@ import { useThree } from '@react-three/fiber';
 import { a } from '@react-spring/three';
 
 import MeshGround2Scene from "/assets/3d/MeshGround2.gltf?url";
+import Glowstick from './glowstick'; 
 
 const MeshGround = ({isRotating, setIsRotating, ...props}) => {
     const MeshGround2Ref = useRef();
@@ -257,6 +258,11 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
                 rotation={[-Math.PI, 0, -Math.PI]}
                 scale={[-0.014, -0.161, -0.014]}
             />
+            <Glowstick 
+            position={[0, 1.15, 2]} 
+            scale={[0.15, 0.15, 0.15]} 
+            rotation={[Math.PI / 2, Math.PI / 2, 0]}/>
+
             {/* End of Mesh Group */}
         </a.group>
     );

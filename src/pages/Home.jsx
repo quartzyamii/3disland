@@ -43,7 +43,7 @@ const Home = () => {
                 {/* <pointLight  />
                 <spotLight  /> */}
                 <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={0.5} />
-                <Glowstick position={[0, 0, -40]} scale={[0.5, 0.5, 0.5]} />
+                {/* <Glowstick position={[0, 0, -40]} scale={[0.5, 0.5, 0.5]} /> */}
 
                 {/* <Sky /> */}
 

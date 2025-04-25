@@ -9,12 +9,23 @@ import Glowstick from './glowstick';
 const MeshGround = ({isRotating, setIsRotating, ...props}) => {
     const MeshGround2Ref = useRef();
 
-    const { gl, viewport } = useThree();
+    const { gl, viewport, camera } = useThree();
     const { nodes, materials } = useGLTF(MeshGround2Scene);
 
     const lastX = useRef(0);
     const rotationSpeed = useRef(0);
     const dampingFactor = 0.95;
+
+
+    const handleWheel = (e) => {
+      e. preventDefault();
+
+      const zoomSpeed = 0.05;
+      camera.position.z += e.deltaY * zoomSpeed;
+
+      if(camera.position.z < -5) camera.position.z = -5;
+      if(camera.position.z > 7) camera.position.z = 7;
+    }
 
     const handlePointerDown = (e) => {
       e.stopPropagation();
@@ -55,13 +66,13 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
     }
 
     const handleKeyDown = (e) => {
-      if (e.key === 'ArrowLeft') {
-        if (!isRotating) setIsRotating(true);  
+      if(e.key === 'ArrowLeft') {
+        if(!isRotating) setIsRotating(true);  
         MeshGround2Ref.current.rotation.y += 0.1;  
-      }
-      else if (e.key === 'ArrowRight') {
-        if (!isRotating) setIsRotating(true);  
-        MeshGround2Ref.current.rotation.y -= 0.1;  
+      } 
+      else if(e.key === 'ArrowRight') {
+        if(!isRotating) setIsRotating(true);  
+        MeshGround2Ref.current.rotation.y -= 0.1; 
       }
     }
 
@@ -92,6 +103,7 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
       canvas.addEventListener('pointerdown', handlePointerDown);
       canvas.addEventListener('pointerup', handlePointerUp);
       canvas.addEventListener('pointermove', handlePointerMove);
+      canvas.addEventListener('wheel', handleWheel);
       document.addEventListener('keydown', handleKeyDown);
       document.addEventListener('keyup', handleKeyUp);
 
@@ -99,6 +111,7 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
       canvas.removeEventListener('pointerdown', handlePointerDown);
       canvas.removeEventListener('pointerup', handlePointerUp);
       canvas.removeEventListener('pointermove', handlePointerMove);
+      canvas.removeEventListener('wheel', handleWheel);
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('keyup', handleKeyUp);
       }
@@ -109,7 +122,10 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
     return (
         <a.group ref={MeshGround2Ref} {...props}>
             {/* Start of Mesh Group */}
-            <group position={[0.294, 1.732, 0.383]} scale={[0.166, 0.155, 0.166]}>
+            <group 
+            position={[0.294, 1.732, 0.383]} 
+            scale={[0.166, 0.155, 0.166]}>
+
             <mesh
                 castShadow
                 receiveShadow
@@ -260,7 +276,7 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
                 scale={[-0.014, -0.161, -0.014]}
             />
             <Glowstick 
-            position={[0, 1.15, 2]} 
+            position={[0, 1.11, 2]} 
             scale={[0.13, 0.13, 0.13]} 
             rotation={[Math.PI / 2, Math.PI / 2, 0]}
             castShadow

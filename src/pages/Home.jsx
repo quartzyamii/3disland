@@ -25,6 +25,14 @@ const Home = () => {
         screenScale = [12,12,12];
       }
 
+      if (window.innerHeight < 600) {
+        screenPosition = [0, -5, -40];
+      } else if (window.innerHeight < 800) {
+        screenPosition = [0, -6, -45];
+      } else {
+        screenPosition = [0, -7, -50];
+      }
+
       return [ screenScale, screenPosition, rotation];
     }
 

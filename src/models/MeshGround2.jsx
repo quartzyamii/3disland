@@ -55,12 +55,13 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
     }
 
     const handleKeyDown = (e) => {
-      if(e.key === 'ArrowLeft') {
-        if(!isRotating) setIsRotating(true);
-        MeshGround2Ref.current.rotation.y += 0.01 (Math.PI);
-      } else if(e.key === 'ArrowRight') {
-        if(!isRotating) setIsRotating(true);
-        MeshGround2Ref.current.rotation.y -= 0.01 (Math.PI);
+      if (e.key === 'ArrowLeft') {
+        if (!isRotating) setIsRotating(true);  
+        MeshGround2Ref.current.rotation.y += 0.1;  
+      }
+      else if (e.key === 'ArrowRight') {
+        if (!isRotating) setIsRotating(true);  
+        MeshGround2Ref.current.rotation.y -= 0.1;  
       }
     }
 
@@ -259,7 +260,7 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
                 scale={[-0.014, -0.161, -0.014]}
             />
             <Glowstick 
-            position={[0, 1.1, 2]} 
+            position={[0, 1.15, 2]} 
             scale={[0.13, 0.13, 0.13]} 
             rotation={[Math.PI / 2, Math.PI / 2, 0]}
             castShadow

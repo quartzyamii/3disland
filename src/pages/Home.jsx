@@ -42,6 +42,7 @@ const Home = () => {
         <section className = "w-full h-screen relative">
             {/* 3D 장면 */}
             <Canvas 
+            
               className = {"w-full h-screen bg transparent ${isRotating ? 'cursor-grabbing : 'cursor-grab'}"}
               camera = {{near : 0.1, far : 1000 ,position : [0,0,5]}}
               shadows

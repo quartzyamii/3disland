@@ -2,122 +2,125 @@ import { useRef, useEffect } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { a } from '@react-spring/three';
+import * as THREE from 'three';
 
 import MeshGround2Scene from "/assets/3d/MeshGround2.gltf?url";
-import Glowstick from './glowstick'; 
+import Glowstick from './glowstick';
 
-const MeshGround = ({isRotating, setIsRotating, ...props}) => {
+const MeshGround = ({ isRotating, setIsRotating, ...props }) => {
     const MeshGround2Ref = useRef();
-
-    const { gl, viewport, camera } = useThree();
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const { gl, viewport, camera, scene } = useThree();
     const { nodes, materials } = useGLTF(MeshGround2Scene);
 
     const lastX = useRef(0);
     const rotationSpeed = useRef(0);
     const dampingFactor = 0.95;
 
-
     const handleWheel = (e) => {
-      e. preventDefault();
-
-      const zoomSpeed = 0.05;
-      camera.position.z += e.deltaY * zoomSpeed;
-
-      if(camera.position.z < -5) camera.position.z = -5;
-      if(camera.position.z > 7) camera.position.z = 7;
+        e.preventDefault();
+        const zoomSpeed = 0.05;
+        camera.position.z += e.deltaY * zoomSpeed;
+        if (camera.position.z < -5) camera.position.z = -5;
+        if (camera.position.z > 7) camera.position.z = 7;
     }
 
     const handlePointerDown = (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      setIsRotating(true);
+        e.stopPropagation();
+        e.preventDefault();
+        setIsRotating(true);
 
-      const clientX = e.touches 
-      ? e.touches[0].clientX 
-      : e.clientX;
-
-      lastX.current = clientX;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        lastX.current = clientX;
     }
 
     const handlePointerUp = (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      setIsRotating(false);
-
-      
+        e.stopPropagation();
+        e.preventDefault();
+        setIsRotating(false);
     }
 
     const handlePointerMove = (e) => {
       e.stopPropagation();
       e.preventDefault();
+  
+      // 마우스 위치 계산
+      mouse.x = (e.clientX / viewport.width) * 2 - 1;
+      mouse.y = -(e.clientY / viewport.height) * 2 + 1;
+  
+      // Raycaster 설정
+      raycaster.setFromCamera(mouse, camera);
+  
+      // Glowstick만 충돌 대상으로 설정
+      const glowstickObject = scene.getObjectByName('Glowstick'); 
+      let isGlowstickHovered = false;  // Glowstick이 감지되었는지 확인하는 변수
+  
+      // Raycaster로 Glowstick만 감지
+      if (glowstickObject) {
+          const intersects = raycaster.intersectObject(glowstickObject, true);
 
-      if(isRotating) {
-        const clientX = e.touches 
-        ? e.touches[0].clientX 
-        : e.clientX;
-
-        const delta = (clientX - lastX.current) / viewport.width;
-        
-        MeshGround2Ref.current.rotation.y += delta * 0.01 * Math.PI;
-        lastX.current = clientX;
-        rotationSpeed.current = delta * 0.01 * Math.PI;
+          console.log(intersects);  // Raycaster 충돌 객체 출력
+  
+          // Glowstick이 감지되면 포인터 모양을 변경
+          if (intersects.length > 0) {
+              document.body.style.cursor = 'pointer';
+              console.log('Glowstick hovered!');
+              isGlowstickHovered = true;
+          }
       }
-      
-    }
-
+  
+      // Glowstick이 감지되지 않으면 기본 포인터로 되돌림
+      if (!isGlowstickHovered) {
+          document.body.style.cursor = 'default';
+      }
+  
+      // MeshGround2 회전 기능 유지 (Raycaster를 사용하지 않고 직접 회전)
+      if (isRotating) {
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const delta = (clientX - lastX.current) / viewport.width;
+          MeshGround2Ref.current.rotation.y += delta * 0.01 * Math.PI;
+          lastX.current = clientX;
+          rotationSpeed.current = delta * 0.01 * Math.PI;
+      }
+  }
     const handleKeyDown = (e) => {
-      if(e.key === 'ArrowLeft') {
-        if(!isRotating) setIsRotating(true);  
-        MeshGround2Ref.current.rotation.y += 0.1;  
-      } 
-      else if(e.key === 'ArrowRight') {
-        if(!isRotating) setIsRotating(true);  
-        MeshGround2Ref.current.rotation.y -= 0.1; 
-      }
+        if (e.key === 'ArrowLeft') {
+            if (!isRotating) setIsRotating(true);
+            MeshGround2Ref.current.rotation.y += 0.1;
+        } else if (e.key === 'ArrowRight') {
+            if (!isRotating) setIsRotating(true);
+            MeshGround2Ref.current.rotation.y -= 0.1;
+        }
     }
 
     const handleKeyUp = (e) => {
-      if(e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        setIsRotating(false);
-      }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            setIsRotating(false);
+        }
     }
-
-    //움직이는 객체 설정시
-  //   useFrame(() =>{
-  //     if(!isRotating){
-  //       rotationSpeed.current *= dampingFactor;
-
-  //       if(Math.abs(rotationSpeed.current) < 0.001) {
-  //         rotationSpeed.current = 0;
-  //       }
-
-  //       MeshGround2Ref.current.rotation.y += rotationSpeed.current;
-  //     } else {
-  //       const rotation = MeshGround2Ref.current.rotation.y;
-  //     }
-  //   }
-  // )
 
     useEffect(() => {
       const canvas = gl.domElement;
       canvas.addEventListener('pointerdown', handlePointerDown);
       canvas.addEventListener('pointerup', handlePointerUp);
-      canvas.addEventListener('pointermove', handlePointerMove);
+      canvas.addEventListener('pointermove', handlePointerMove); 
       canvas.addEventListener('wheel', handleWheel);
       document.addEventListener('keydown', handleKeyDown);
       document.addEventListener('keyup', handleKeyUp);
 
-      return ()=> {
-      canvas.removeEventListener('pointerdown', handlePointerDown);
-      canvas.removeEventListener('pointerup', handlePointerUp);
-      canvas.removeEventListener('pointermove', handlePointerMove);
-      canvas.removeEventListener('wheel', handleWheel);
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('keyup', handleKeyUp);
+      return () => {
+        canvas.removeEventListener('pointerdown', handlePointerDown);
+        canvas.removeEventListener('pointerup', handlePointerUp);
+        canvas.removeEventListener('pointermove', handlePointerMove); 
+        canvas.removeEventListener('wheel', handleWheel);
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('keyup', handleKeyUp);
       }
-    },[gl, handlePointerDown, handlePointerUp, handlePointerMove]);
+    }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
 
     console.log(nodes);
+
 
     return (
         <a.group ref={MeshGround2Ref} {...props}>
@@ -276,12 +279,14 @@ const MeshGround = ({isRotating, setIsRotating, ...props}) => {
                 scale={[-0.014, -0.161, -0.014]}
             />
             <Glowstick 
-            position={[0, 1.11, 2]} 
-            scale={[0.13, 0.13, 0.13]} 
-            rotation={[Math.PI / 2, Math.PI / 2, 0]}
-            castShadow
-            receiveShadow
+                name="Glowstick"  // Glowstick 이름을 명시적으로 지정
+                position={[0, 1.11, 2]} 
+                scale={[0.13, 0.13, 0.13]} 
+                rotation={[Math.PI / 2, Math.PI / 2, 0]}
+                castShadow
+                receiveShadow
             />
+
 
             {/* End of Mesh Group */}
         </a.group>

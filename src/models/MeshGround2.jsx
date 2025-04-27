@@ -65,6 +65,11 @@ const MeshGround = forwardRef(({isRotating, setIsRotating, setShowPopup, circleR
             ref.current.rotation.y += delta * 0.01 * Math.PI;
             lastX.current = clientX;
             rotationSpeed.current = delta * 0.01 * Math.PI;
+
+            // 회전값 출력 (라디안)
+            console.log('Y Rotation (radians):', ref.current.rotation.y);
+            // 회전값 출력 (도)
+            console.log('Y Rotation (degrees):', THREE.MathUtils.radToDeg(ref.current.rotation.y));
         }
     }
 
@@ -184,7 +189,7 @@ const MeshGround = forwardRef(({isRotating, setIsRotating, setShowPopup, circleR
                 <meshBasicMaterial 
                     color="white" 
                     transparent 
-                    opacity={0.5} 
+                    opacity={0} 
                     side={THREE.DoubleSide}
                 />
             </mesh>

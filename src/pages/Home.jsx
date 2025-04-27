@@ -2,7 +2,6 @@ import React, { useState, Suspense, useRef, useEffect } from 'react';
 import {Canvas, useThree} from '@react-three/fiber';
 import Loader from '../components/Loader';
 import * as THREE from 'three';
-import { OrbitControls } from '@react-three/drei';
 import Popup from '../components/Popup';
 
 // import Sky from '../models/sky';
@@ -14,29 +13,18 @@ import Glowstick from '../models/glowstick';
             POPUP
             </di v> */}
 
-const Home = () => {
-  const [isRotating, setIsRotating] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const circleRef = useRef();
-  const controlsRef = useRef();
-  const cameraRef = useRef();
-  const meshGroundRef = useRef();
+const RaycasterHandler = ({ circleRef, setIsIntersecting }) => {
+  const { camera } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
 
-  // 마우스 이동 이벤트 핸들러
   const handleMouseMove = (event) => {
-    if (!controlsRef.current?.object) return;
-    
     const canvas = event.target;
     const rect = canvas.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     
-    // 레이캐스터 업데이트
-    raycaster.current.setFromCamera({ x, y }, controlsRef.current.object);
+    raycaster.current.setFromCamera({ x, y }, camera);
     
-    // 원형 메쉬와의 교차 감지
     if (circleRef.current) {
       const intersects = raycaster.current.intersectObject(circleRef.current);
       setIsIntersecting(intersects.length > 0);
@@ -52,6 +40,21 @@ const Home = () => {
       };
     }
   }, []);
+
+  return null;
+};
+
+const Home = () => {
+  const [isRotating, setIsRotating] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const circleRef = useRef();
+  const meshGroundRef = useRef();
+  const animationFrame = useRef(null);
+  const targetRotation = 6.142041340646648; // 351.9130464139269 degrees
+  const rotationSpeed = 0.02;
+  const popupShown = useRef(false);
+  const initialRotation = useRef(0);
 
   //화면위치,스케일조정(편집중)
   const adjustMeshGround2ForScreensize = () => {
@@ -78,67 +81,76 @@ const Home = () => {
 
   const [MeshGroundScale, MeshGroundPosition, MeshGroundRotation ] = adjustMeshGround2ForScreensize();
 
+  const getOptimizedRotation = (current, target) => {
+    // 현재 각도와 목표 각도를 0~2π 범위로 정규화
+    const normalizedCurrent = ((current % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    const normalizedTarget = ((target % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    
+    // 두 각도 사이의 차이 계산
+    let diff = normalizedTarget - normalizedCurrent;
+    
+    // 최단 경로 계산
+    if (Math.abs(diff) > Math.PI) {
+      diff = diff > 0 ? diff - 2 * Math.PI : diff + 2 * Math.PI;
+    }
+    
+    return current + diff;
+  };
+
+  const animateRotation = () => {
+    if (!meshGroundRef.current) return;
+
+    const currentRotation = meshGroundRef.current.rotation.y;
+    const optimizedTarget = getOptimizedRotation(currentRotation, targetRotation);
+    const diff = optimizedTarget - currentRotation;
+    
+    // 진행률 계산 (초기 위치에서 현재까지의 진행률)
+    const totalDistance = Math.abs(optimizedTarget - initialRotation.current);
+    const currentDistance = Math.abs(currentRotation - initialRotation.current);
+    const progress = currentDistance / totalDistance;
+    
+    // 회전이 70% 이상 완료되었을 때 팝업 표시
+    if (progress > 0.7 && !popupShown.current) {
+      setShowPopup(true);
+      popupShown.current = true;
+    }
+    
+    if (Math.abs(diff) < 0.001) {
+      meshGroundRef.current.rotation.y = targetRotation;
+      setIsRotating(false);
+      return;
+    }
+
+    meshGroundRef.current.rotation.y += diff * rotationSpeed;
+    animationFrame.current = requestAnimationFrame(animateRotation);
+  };
+
   const handleCanvasClick = (e) => {
     if (isIntersecting && !showPopup) {
-      setShowPopup(true);
+      setIsRotating(true);
+      popupShown.current = false;
+      initialRotation.current = meshGroundRef.current.rotation.y;
+      animateRotation();
     }
   };
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    // 카메라 초기화 애니메이션
-    if (controlsRef.current) {
-      const targetPosition = new THREE.Vector3(0, 0, 5);
-      const targetRotation = new THREE.Euler(0, 0, 0);
-      
-      // 현재 카메라 위치와 회전값 저장
-      const currentPosition = controlsRef.current.object.position.clone();
-      const currentRotation = controlsRef.current.object.rotation.clone();
-      
-      // 애니메이션 시작 시간
-      const startTime = Date.now();
-      const duration = 1000; // 1초 동안 애니메이션
-      
-      const animate = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // 부드러운 이동을 위한 easing 함수
-        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-        const easedProgress = easeOutCubic(progress);
-        
-        // 위치 보간
-        controlsRef.current.object.position.lerpVectors(
-          currentPosition,
-          targetPosition,
-          easedProgress
-        );
-        
-        // 회전 보간
-        controlsRef.current.object.rotation.x = THREE.MathUtils.lerp(
-          currentRotation.x,
-          targetRotation.x,
-          easedProgress
-        );
-        controlsRef.current.object.rotation.y = THREE.MathUtils.lerp(
-          currentRotation.y,
-          targetRotation.y,
-          easedProgress
-        );
-        controlsRef.current.object.rotation.z = THREE.MathUtils.lerp(
-          currentRotation.z,
-          targetRotation.z,
-          easedProgress
-        );
-        
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-      
-      animate();
+    if (animationFrame.current) {
+      cancelAnimationFrame(animationFrame.current);
+    }
+    if (meshGroundRef.current) {
+      meshGroundRef.current.rotation.y = 0;
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+    };
+  }, []);
 
   return (
     <section className="w-full h-screen relative">
@@ -154,6 +166,11 @@ const Home = () => {
         onClick={handleCanvasClick}
       >
         <Suspense fallback={<Loader />}>
+          <RaycasterHandler 
+            circleRef={circleRef}
+            setIsIntersecting={setIsIntersecting}
+          />
+          
           <directionalLight 
             position={[1,0.7,1]} 
             intensity={1} 
@@ -170,16 +187,7 @@ const Home = () => {
           />
           
           <ambientLight intensity={0.3} />
-          {/* <pointLight  />
-          <spotLight  /> */}
           <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={0.5} />
-          
-          {/* <Sky /> */}
-
-          <OrbitControls 
-            ref={controlsRef}
-            enableZoom={false} 
-          />
 
           <MeshGround2 
             ref={meshGroundRef}

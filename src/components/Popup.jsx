@@ -1,9 +1,19 @@
 import React from 'react';
+import { useSpring, animated } from '@react-spring/web';
 
 const Popup = ({ onClose }) => {
+  const fadeIn = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 2000 }
+  });
+
   return (
-    <div className="fixed right-0 top-1/2 transform -translate-y-1/2 flex items-center justify-center z-50 mr-4">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-[600px]">
+    <animated.div 
+      style={fadeIn}
+      className="fixed right-0 top-2/3 transform -translate-y-1/2 flex items-center justify-center z-50 mr-4"
+    >
+      <div className="bg-white/70 backdrop-blur-sm p-6 rounded-lg shadow-xl w-[600px]">
         <div className="flex gap-6">
           {/* 이미지 영역 */}
           <div className="w-1/3">
@@ -22,7 +32,7 @@ const Popup = ({ onClose }) => {
             <div className="flex justify-end">
               <button
                 onClick={onClose}
-                className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+                className="bg-gray-500 text-white py-2 px-6 rounded hover:bg-sky-600 transition-colors"
               >
                 닫기
               </button>
@@ -30,7 +40,7 @@ const Popup = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
 

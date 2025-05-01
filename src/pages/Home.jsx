@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import Popup from '../components/Popup';
 
 // import Sky from '../models/sky';
-import MeshGround2 from '../models/MeshGround2';
+import Island from '../models/Island';
 import Glowstick from '../models/glowstick';
 
 // 가운데 상단에 팝업 코드
@@ -24,7 +24,7 @@ const RaycasterHandler = ({ circleRef, setIsIntersecting }) => {
     const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     
     raycaster.current.setFromCamera({ x, y }, camera);
-    
+  
     if (circleRef.current) {
       const intersects = raycaster.current.intersectObject(circleRef.current);
       setIsIntersecting(intersects.length > 0);
@@ -49,15 +49,15 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const circleRef = useRef();
-  const meshGroundRef = useRef();
+  const IslandRef = useRef();
   const animationFrame = useRef(null);
-  const targetRotation = 6.142041340646648; // 351.9130464139269 degrees
+  const targetRotation = 6.256991860863604; // 351.9130464139269 degrees
   const rotationSpeed = 0.02;
   const popupShown = useRef(false);
   const initialRotation = useRef(0);
 
   //화면위치,스케일조정(편집중)
-  const adjustMeshGround2ForScreensize = () => {
+  const adjustIslandForScreensize = () => {
     let screenScale = null;
     let screenPosition = [0, -7, -48];
     let rotation = [0.1, 4.7, 0 ];
@@ -79,7 +79,7 @@ const Home = () => {
     return [ screenScale, screenPosition, rotation];
   }
 
-  const [MeshGroundScale, MeshGroundPosition, MeshGroundRotation ] = adjustMeshGround2ForScreensize();
+  const [IslandScale, IslandPosition, IslandRotation ] = adjustIslandForScreensize();
 
   const getOptimizedRotation = (current, target) => {
     // 현재 각도와 목표 각도를 0~2π 범위로 정규화
@@ -96,11 +96,22 @@ const Home = () => {
     
     return current + diff;
   };
-
+  const handleCanvasClick = (e) => {
+    if (isIntersecting && !showPopup && IslandRef.current) {  
+      // ref.current가 정의되었는지 확인
+      setIsRotating(true);
+      popupShown.current = false;
+      initialRotation.current = IslandRef.current.rotation.y;  
+      // ref.current로 접근
+      animateRotation();
+    }
+  };
+  
   const animateRotation = () => {
-    if (!meshGroundRef.current) return;
-
-    const currentRotation = meshGroundRef.current.rotation.y;
+    if (!IslandRef.current) return;  
+    // IslandRef.current가 정의되어 있지 않으면 종료
+  
+    const currentRotation = IslandRef.current.rotation.y;
     const optimizedTarget = getOptimizedRotation(currentRotation, targetRotation);
     const diff = optimizedTarget - currentRotation;
     
@@ -116,22 +127,15 @@ const Home = () => {
     }
     
     if (Math.abs(diff) < 0.001) {
-      meshGroundRef.current.rotation.y = targetRotation;
+      IslandRef.current.rotation.y = targetRotation;  
+      // IslandRef.current에 접근
       setIsRotating(false);
       return;
     }
-
-    meshGroundRef.current.rotation.y += diff * rotationSpeed;
+  
+    IslandRef.current.rotation.y += diff * rotationSpeed;  
+    // IslandRef.current에 접근
     animationFrame.current = requestAnimationFrame(animateRotation);
-  };
-
-  const handleCanvasClick = (e) => {
-    if (isIntersecting && !showPopup) {
-      setIsRotating(true);
-      popupShown.current = false;
-      initialRotation.current = meshGroundRef.current.rotation.y;
-      animateRotation();
-    }
   };
 
   const handleClosePopup = () => {
@@ -139,8 +143,8 @@ const Home = () => {
     if (animationFrame.current) {
       cancelAnimationFrame(animationFrame.current);
     }
-    if (meshGroundRef.current) {
-      meshGroundRef.current.rotation.y = 0;
+    if (Island.current) {
+      Island.current.rotation.y = 0;
     }
   };
 
@@ -189,11 +193,11 @@ const Home = () => {
           <ambientLight intensity={0.3} />
           <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={0.5} />
 
-          <MeshGround2 
-            ref={meshGroundRef}
-            position={MeshGroundPosition} 
-            scale={MeshGroundScale} 
-            rotation={MeshGroundRotation}
+          <Island
+            ref={IslandRef}
+            position={IslandPosition} 
+            scale={IslandScale} 
+            rotation={IslandRotation}
             isRotating={isRotating}
             setIsRotating={setIsRotating}
             setShowPopup={setShowPopup}

@@ -19,6 +19,11 @@ const Popup = ({ onClose }) => {
           <div className="w-1/3">
             <div className="w-full h-48 bg-gray-200 rounded-lg">
               {/* 이미지가 들어갈 영역 */}
+              <img 
+                src="/assets/images/Glowstick.png"
+                alt="Glowstick"
+                className="w-full h-full object-cover rounded-lg"
+              />
             </div>
           </div>
           

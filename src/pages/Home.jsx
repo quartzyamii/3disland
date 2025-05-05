@@ -8,6 +8,7 @@ import Star from '../components/Star';
 // import Sky from '../models/sky';
 import Island from '../models/Island';
 import Glowstick from '../models/glowstick';
+import Cloud from '../models/Cloud';
 
 // 가운데 상단에 팝업 코드
 {/* <div className = "absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
@@ -241,6 +242,12 @@ const Home = () => {
             setShowPopup={setShowPopup}
             circleRef={circleRef}
           />
+          <Cloud 
+          position={[0, -10, -48]} 
+          scale={[12,12,12]}
+          // rotation={[0, Math.PI, 0]}
+          />
+          
         </Suspense>
       </Canvas>
     </section>

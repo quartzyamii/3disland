@@ -157,7 +157,8 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="w-full h-screen relative">
+    <section className="w-full h-screen relative bg-cover bg-center"
+    style={{backgroundImage:'url("/assets/images/SKY.png'}}>
       {showPopup && (
         <Popup onClose={handleClosePopup} />
       )}

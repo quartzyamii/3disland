@@ -26,9 +26,9 @@ const Cloud = (props) => {
         receiveShadow
         geometry={nodes.Cloud2.geometry}
         material={materials.Cloude}
-        position={[-3.745, -0, -2.041]}
+        position={[-4.3, 0.13, -2.041]}
         rotation={[-2.596, -1.122, 0.642]}
-        scale={[-0.387, -0.324, -0.307]}
+        scale={[-0.437, -0.4, -0.35]}
       />
       <mesh
         castShadow

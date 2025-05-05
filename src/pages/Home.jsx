@@ -3,6 +3,7 @@ import {Canvas, useThree} from '@react-three/fiber';
 import Loader from '../components/Loader';
 import * as THREE from 'three';
 import Popup from '../components/Popup';
+import Star from '../components/Star';
 
 // import Sky from '../models/sky';
 import Island from '../models/Island';
@@ -32,7 +33,7 @@ const RaycasterHandler = ({ circleRef, setIsIntersecting }) => {
   };
 
   useEffect(() => {
-    const canvas = document.querySelector('canvas');
+    const canvas = document.getElementById('three-canvas');
     if (canvas) {
       canvas.addEventListener('mousemove', handleMouseMove);
       return () => {
@@ -96,46 +97,71 @@ const Home = () => {
     
     return current + diff;
   };
-  const handleCanvasClick = (e) => {
-    if (isIntersecting && !showPopup && IslandRef.current) {  
-      // ref.current가 정의되었는지 확인
-      setIsRotating(true);
-      popupShown.current = false;
-      initialRotation.current = IslandRef.current.rotation.y;  
-      // ref.current로 접근
-      animateRotation();
+
+  // 커스텀 이징 함수: 초~중반은 S-curve, 0.3~1은 S-curve와 power5를 부드럽게 보간
+  function customEase(t) {
+    const s = t * t * t * (t * (t * 6 - 15) + 10);
+    const power5 = 1 - Math.pow(1 - t, 5);
+    if (t < 0.3) {
+      return s;
+    } else {
+      const lerp = (t - 0.3) / 0.7;
+      return s + (power5 - s) * lerp;
     }
-  };
-  
-  const animateRotation = () => {
-    if (!IslandRef.current) return;  
-    // IslandRef.current가 정의되어 있지 않으면 종료
-  
-    const currentRotation = IslandRef.current.rotation.y;
-    const optimizedTarget = getOptimizedRotation(currentRotation, targetRotation);
-    const diff = optimizedTarget - currentRotation;
-    
-    // 진행률 계산 (초기 위치에서 현재까지의 진행률)
-    const totalDistance = Math.abs(optimizedTarget - initialRotation.current);
-    const currentDistance = Math.abs(currentRotation - initialRotation.current);
-    const progress = currentDistance / totalDistance;
-    
-    // 회전이 70% 이상 완료되었을 때 팝업 표시
+  }
+
+  const ANIMATION_DURATION = 2500; // ms, 더 부드럽게
+  const animationStart = useRef(null);
+
+  const animateRotation = (timestamp) => {
+    if (!IslandRef.current) return;
+    if (!animationStart.current) animationStart.current = timestamp;
+
+    const elapsed = timestamp - animationStart.current;
+    const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
+    const easedProgress = customEase(progress);
+    const newRotation = initialRotation.current + (targetRotation - initialRotation.current) * easedProgress;
+    IslandRef.current.rotation.y = newRotation;
+
     if (progress > 0.7 && !popupShown.current) {
       setShowPopup(true);
       popupShown.current = true;
     }
-    
-    if (Math.abs(diff) < 0.001) {
-      IslandRef.current.rotation.y = targetRotation;  
-      // IslandRef.current에 접근
+
+    if (progress < 1) {
+      animationFrame.current = requestAnimationFrame(animateRotation);
+    } else {
+      IslandRef.current.rotation.y = targetRotation;
       setIsRotating(false);
-      return;
+      animationStart.current = null;
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+        animationFrame.current = null;
+      }
     }
-  
-    IslandRef.current.rotation.y += diff * rotationSpeed;  
-    // IslandRef.current에 접근
-    animationFrame.current = requestAnimationFrame(animateRotation);
+  };
+
+  const handleCanvasClick = (e) => {
+    if (isRotating) return;
+    if (isIntersecting && !showPopup && IslandRef.current) {
+      const current = IslandRef.current.rotation.y;
+      const normalizedCurrent = ((current % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      const normalizedTarget = ((targetRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      if (Math.abs(normalizedCurrent - normalizedTarget) < 0.001) return;
+
+      setIsRotating(true);
+      setIsIntersecting(false);
+      popupShown.current = false;
+      initialRotation.current = current;
+      animationStart.current = null;
+      requestAnimationFrame(animateRotation);
+
+      // 클릭 이벤트를 한 번 더 강제로 발생시키는 부분 주석 처리
+      // const canvas = document.getElementById('three-canvas');
+      // if (canvas) {
+      //   canvas.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+      // }
+    }
   };
 
   const handleClosePopup = () => {
@@ -152,23 +178,34 @@ const Home = () => {
     return () => {
       if (animationFrame.current) {
         cancelAnimationFrame(animationFrame.current);
+        animationFrame.current = null;
       }
     };
   }, []);
 
   return (
-    <section className="w-full h-screen relative bg-cover bg-center"
-    style={{backgroundImage:'url("/assets/images/SKY.png'}}>
+    <section className="w-full h-screen relative"
+    style={{
+      backgroundImage: 'url("/assets/images/SKY.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      position: 'relative',
+      zIndex: 1
+    }}>
+      <Star />
+
       {showPopup && (
         <Popup onClose={handleClosePopup} />
       )}
 
       <Canvas 
+        id="three-canvas"
         className={`w-full h-screen bg-transparent ${isIntersecting ? 'cursor-grab' : 'cursor-default'}`}
         camera={{near: 0.1, far: 1000, position: [0,0,5]}}
         shadows
         gl={{ antialias: true }}
         onClick={handleCanvasClick}
+        style={{ zIndex: 2 }}
       >
         <Suspense fallback={<Loader />}>
           <RaycasterHandler 

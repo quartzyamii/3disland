@@ -40,6 +40,7 @@ const Star = () => {
     }
     initStars();
     window.addEventListener('resize', initStars);
+    
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);

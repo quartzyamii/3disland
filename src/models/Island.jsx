@@ -6,6 +6,9 @@ import * as THREE from 'three';
 
 import IslandScene from "/assets/3d/Island.gltf?url";
 import Glowstick from './glowstick'; 
+import StarBottle from './StarBottle';
+import Bottle from './Bottle';
+import Sheep from './Sheep';
 
 const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, ...props}, ref) => {
     // ===== 상태 및 참조 =====
@@ -536,6 +539,31 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
         rotation={[-0.056, 0.002, 0.354]}
         scale={[0.375, 0.371, 0.427]}
       />
+      <StarBottle 
+                position={[1, 0.75, 2.3]} 
+                scale={[0.31, 0.31, 0.31]} 
+                rotation={[0,0,0]}
+                castShadow
+                receiveShadow
+        />
+
+      <Bottle 
+                position={[1, 0.75, 2.3]} 
+                scale={[0.31, 0.31, 0.31]} 
+                rotation={[0,0,0]}
+                castShadow
+                receiveShadow
+      />
+
+
+      <Sheep 
+                position={[2, 0.65, 1.4]} 
+                scale={[0.25, 0.25, 0.25]} 
+                rotation={[0.38,4.2,0.3]}
+                castShadow
+                receiveShadow
+      />
+
       <Glowstick 
                 position={[-0.4, 1.2, 2.9]} 
                 scale={[0.13, 0.13, 0.13]} 
@@ -560,9 +588,12 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                     side={THREE.DoubleSide}
                 />
             </mesh>
+
+            
     </a.group>
   )
 });
+
 Island.displayName = 'Island';
 
 export default Island;

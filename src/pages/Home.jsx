@@ -65,7 +65,7 @@ const Home = () => {
     let rotation = [0.1, 4.7, 0 ];
 
     if (window.innerWidth < 768) {
-      screenScale = [8,8,8];
+      screenScale = [11,11,11];
     } else {
       screenScale = [12,12,12];
     }
@@ -99,7 +99,7 @@ const Home = () => {
     return current + diff;
   };
 
-  // 커스텀 이징 함수: 초~중반은 S-curve, 0.3~1은 S-curve와 power5를 부드럽게 보간
+  // 커스텀 이징 함수
   function customEase(t) {
     const s = t * t * t * (t * (t * 6 - 15) + 10);
     const power5 = 1 - Math.pow(1 - t, 5);
@@ -107,11 +107,11 @@ const Home = () => {
       return s;
     } else {
       const lerp = (t - 0.3) / 0.7;
-      return s + (power5 - s) * lerp;
+      return s + (power5 - s) * Math.pow(lerp, 10);
     }
   }
 
-  const ANIMATION_DURATION = 2500; // ms, 더 부드럽게
+  const ANIMATION_DURATION = 1000; // ms, 더 부드럽게
   const animationStart = useRef(null);
 
   const animateRotation = (timestamp) => {

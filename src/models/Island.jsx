@@ -9,6 +9,10 @@ import Glowstick from './glowstick';
 import StarBottle from './StarBottle';
 import Bottle from './Bottle';
 import Sheep from './Sheep';
+import KeyRing from './KeyRing';
+import TimeCapsule from './TimeCapsule';
+import Trip from './Trip';
+import Sight from './Sight';
 
 const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, ...props}, ref) => {
     // ===== 상태 및 참조 =====
@@ -560,6 +564,38 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 position={[2, 0.65, 1.4]} 
                 scale={[0.25, 0.25, 0.25]} 
                 rotation={[0.38,4.2,0.3]}
+                castShadow
+                receiveShadow
+      />
+
+      <KeyRing 
+                position={[2.6, 1, 0.1]} 
+                scale={[0.4, 0.4, 0.4]} 
+                rotation={[Math.PI / 2, 0.2, -Math.PI / 2]}
+                castShadow
+                receiveShadow
+      />
+
+      <TimeCapsule 
+                position={[2.2, 0.79, -0.9]} 
+                scale={[0.5, 0.5, 0.5]} 
+                rotation={[6, 0.2, 0]}
+                castShadow
+                receiveShadow
+      />
+
+       <Trip
+                position={[0.7, 0.85, -2.1]} 
+                scale={[0.3, 0.3, 0.3]} 
+                rotation={[6, 1.2, 0.4]}
+                castShadow
+                receiveShadow
+      />
+
+      <Sight
+                position={[-1.6, 0.85, -1.1]} 
+                scale={[0.5, 0.5, 0.5]} 
+                rotation={[6, 1, 0.2]}
                 castShadow
                 receiveShadow
       />

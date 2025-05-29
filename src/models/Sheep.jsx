@@ -11,7 +11,7 @@ import { a } from '@react-spring/three';
 import SheepScene from '/assets/3d/Sheep.gltf?url';  
 
 
-const Sheep = (props) => {  // 컴포넌트 이름을 대문자로 수정
+const Sheep = (props) => {  
   const SheepRef = useRef();  
 
   const { nodes, materials } = useGLTF(SheepScene);  
@@ -19,7 +19,7 @@ const Sheep = (props) => {  // 컴포넌트 이름을 대문자로 수정
 
 
   return (
-    <group {...props} dispose={null}>
+    <a.group {...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow
@@ -36,7 +36,7 @@ const Sheep = (props) => {  // 컴포넌트 이름을 대문자로 수정
         rotation={[-1.919, -0.301, -1.64]}
         scale={0.27}
       />
-    </group>
+    </a.group>
   )
 }
 

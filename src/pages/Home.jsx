@@ -1,5 +1,6 @@
 import React, { useState, Suspense, useRef, useEffect } from 'react';
 import {Canvas, useThree} from '@react-three/fiber';
+import {Stats} from '@react-three/drei';
 import Loader from '../components/Loader';
 import * as THREE from 'three';
 import Popup from '../components/Popup';
@@ -208,6 +209,7 @@ const Home = () => {
         onClick={handleCanvasClick}
         style={{ zIndex: 2 }}
       >
+        <Stats />
         <Suspense fallback={<Loader />}>
           <RaycasterHandler 
             circleRef={circleRef}

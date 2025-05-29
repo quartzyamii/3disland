@@ -19,6 +19,7 @@ const Bottle = (props) => {
     '/path_to_posy.jpg', '/path_to_negy.jpg',
     '/path_to_posz.jpg', '/path_to_negz.jpg',
   ]);
+  
 
   return (
     <a.group ref={BottleRef} {...props}>
@@ -28,13 +29,17 @@ const Bottle = (props) => {
         geometry={nodes.Bottle.geometry}
         material={
           new THREE.MeshPhysicalMaterial({
-            color: 0xffffff, // 유리의 색
-            roughness: 0,  // 표면의 거칠기 (거칠면 유리처럼 반사 덜 됨)
-            metalness: 0,    // 금속성 (유리는 금속이 아니므로 0)
-            transmission: 0.85, // 유리 효과 (1로 설정하면 투명하고 빛을 통과시킴)
-            opacity: 1,    // 투명도 (0은 완전 투명, 1은 불투명)
-            transparent: true, // 투명하게 설정
-            envMap: envMap,   // 환경 맵을 반사에 사용
+            color: 0xffffff,    // 유리의 색
+            roughness: 0.05,    // 표면의 거칠기 (거의 매끄러운 표면)
+            metalness: 0,       // 금속성 (유리에는 필요 없음)
+            transmission: 0.85, // 유리 효과 (투명도)
+            thickness: 0.15,
+            opacity: 0.5,       // 투명도
+            transparent: true,  // 투명하게 설정
+            envMap: envMap,     // 환경 맵을 반사에 사용
+            specularIntensity: 1.5,   // 하이라이트 강도 증가
+            clearcoat: 3.0,     // 추가 반사 레이어 강도
+            clearcoatRoughness: 0.05, // 추가 반사 레이어의 거칠기 (매끄럽게)
           })
         }
         position={[0, 0.63, 0]}

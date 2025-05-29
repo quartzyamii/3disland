@@ -14,7 +14,7 @@ import TimeCapsule from './TimeCapsule';
 import Trip from './Trip';
 import Sight from './Sight';
 
-const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, ...props}, ref) => {
+const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, bottleRef, sheepRef, keyRingRef, timeCapsuleRef, tripRef, sightRef, ...props}, ref) => {
     // ===== 상태 및 참조 =====
     const { gl, viewport, camera } = useThree();
     const { nodes, materials } = useGLTF(IslandScene);
@@ -552,6 +552,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
         />
 
       <Bottle 
+                ref={bottleRef}
                 position={[1, 0.75, 2.3]} 
                 scale={[0.31, 0.31, 0.31]} 
                 rotation={[0,0,0]}
@@ -559,8 +560,8 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 receiveShadow
       />
 
-
       <Sheep 
+                ref={sheepRef}
                 position={[2, 0.65, 1.4]} 
                 scale={[0.25, 0.25, 0.25]} 
                 rotation={[0.38,4.2,0.3]}
@@ -569,6 +570,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       />
 
       <KeyRing 
+                ref={keyRingRef}
                 position={[2.6, 1, 0.1]} 
                 scale={[0.4, 0.4, 0.4]} 
                 rotation={[Math.PI / 2, 0.2, -Math.PI / 2]}
@@ -577,6 +579,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       />
 
       <TimeCapsule 
+                ref={timeCapsuleRef}
                 position={[2.2, 0.79, -0.9]} 
                 scale={[0.5, 0.5, 0.5]} 
                 rotation={[6, 0.2, 0]}
@@ -585,6 +588,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       />
 
        <Trip
+                ref={tripRef}
                 position={[0.7, 0.85, -2.1]} 
                 scale={[0.3, 0.3, 0.3]} 
                 rotation={[6, 1.2, 0.4]}
@@ -593,6 +597,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       />
 
       <Sight
+                ref={sightRef}
                 position={[-1.6, 0.85, -1.1]} 
                 scale={[0.5, 0.5, 0.5]} 
                 rotation={[6, 1, 0.2]}

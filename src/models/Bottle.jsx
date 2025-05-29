@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, forwardRef } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { a } from '@react-spring/three';
 import * as THREE from 'three';
@@ -6,9 +6,7 @@ import * as THREE from 'three';
 // Bottle.glb 파일 경로
 import BottleScene from '/assets/3d/Bottle.gltf?url';  
 
-const Bottle = (props) => {
-  const BottleRef = useRef();  
-
+const Bottle = forwardRef((props, ref) => {
   // GLTF 모델 로딩
   const { nodes, materials } = useGLTF(BottleScene);  
   console.log(nodes, materials);
@@ -22,7 +20,7 @@ const Bottle = (props) => {
   
 
   return (
-    <a.group ref={BottleRef} {...props}>
+    <a.group ref={ref} {...props}>
       <mesh
         castShadow
         receiveShadow
@@ -47,7 +45,9 @@ const Bottle = (props) => {
       />
     </a.group>
   );
-}
+});
+
+Bottle.displayName = 'Bottle';
 
 export default Bottle;
 

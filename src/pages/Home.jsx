@@ -16,11 +16,14 @@ import Cloud from '../models/Cloud';
             POPUP
             </di v> */}
 
-const RaycasterHandler = ({ circleRef, setIsIntersecting }) => {
+const RaycasterHandler = ({ circleRef, objectRefs, setIsIntersecting, setHoveredObject }) => {
   const { camera } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
 
   const handleMouseMove = (event) => {
+    // objectRefs가 유효한지 확인
+    if (!objectRefs || !camera) return;
+    
     const canvas = event.target;
     const rect = canvas.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -28,10 +31,29 @@ const RaycasterHandler = ({ circleRef, setIsIntersecting }) => {
     
     raycaster.current.setFromCamera({ x, y }, camera);
   
-    if (circleRef.current) {
+    // 원형 메쉬 감지
+    let isCircleIntersecting = false;
+    if (circleRef && circleRef.current) {
       const intersects = raycaster.current.intersectObject(circleRef.current);
-      setIsIntersecting(intersects.length > 0);
+      isCircleIntersecting = intersects.length > 0;
     }
+
+    // 6개 오브젝트 감지
+    const objects = Object.values(objectRefs || {}).filter(ref => ref && ref.current);
+    let isObjectIntersecting = false;
+    let hoveredObjectName = null;
+
+    if (objects.length > 0) {
+      const intersects = raycaster.current.intersectObjects(objects.map(ref => ref.current), true);
+      if (intersects.length > 0) {
+        isObjectIntersecting = true;
+        hoveredObjectName = intersects[0].object.name || intersects[0].object.parent?.name || 'Unknown';
+        console.log('Hovered object:', hoveredObjectName, intersects[0].object);
+      }
+    }
+
+    setIsIntersecting(isCircleIntersecting || isObjectIntersecting);
+    setHoveredObject(hoveredObjectName);
   };
 
   useEffect(() => {
@@ -47,10 +69,66 @@ const RaycasterHandler = ({ circleRef, setIsIntersecting }) => {
   return null;
 };
 
+// RaycasterHelper for visual debugging
+const RaycasterHelper = ({ showHelper = false }) => {
+  const { camera, scene } = useThree();
+  const raycaster = useRef(new THREE.Raycaster());
+  const lineRef = useRef();
+  
+  useEffect(() => {
+    if (!showHelper) return;
+    
+    const handleMouseMove = (event) => {
+      const canvas = document.getElementById('three-canvas');
+      if (!canvas) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      
+      raycaster.current.setFromCamera({ x, y }, camera);
+      
+      if (lineRef.current) {
+        const points = [
+          raycaster.current.ray.origin,
+          raycaster.current.ray.origin.clone().add(raycaster.current.ray.direction.clone().multiplyScalar(50))
+        ];
+        lineRef.current.geometry.setFromPoints(points);
+      }
+    };
+    
+    const canvas = document.getElementById('three-canvas');
+    if (canvas) {
+      canvas.addEventListener('mousemove', handleMouseMove);
+      return () => canvas.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, [camera, showHelper]);
+  
+  if (!showHelper) return null;
+  
+  return (
+    <line ref={lineRef}>
+      <bufferGeometry />
+      <lineBasicMaterial color="red" />
+    </line>
+  );
+};
+
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
+  const [hoveredObject, setHoveredObject] = useState(null);
+  const [showRayHelper, setShowRayHelper] = useState(false); // 레이 헬퍼 표시 여부
+  
+  // 6개 오브젝트 각각의 ref
+  const bottleRef = useRef();
+  const sheepRef = useRef();
+  const keyRingRef = useRef();
+  const timeCapsuleRef = useRef();
+  const tripRef = useRef();
+  const sightRef = useRef();
+  
   const circleRef = useRef();
   const IslandRef = useRef();
   const animationFrame = useRef(null);
@@ -58,6 +136,16 @@ const Home = () => {
   const rotationSpeed = 0.02;
   const popupShown = useRef(false);
   const initialRotation = useRef(0);
+
+  // 오브젝트 refs를 객체로 묶기
+  const objectRefs = {
+    bottle: bottleRef,
+    sheep: sheepRef,
+    keyRing: keyRingRef,
+    timeCapsule: timeCapsuleRef,
+    trip: tripRef,
+    sight: sightRef
+  };
 
   //화면위치,스케일조정(편집중)
   const adjustIslandForScreensize = () => {
@@ -196,6 +284,25 @@ const Home = () => {
     }}>
       <Star />
 
+      {/* Debug Controls */}
+      <div className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 p-4 rounded text-white">
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-2">
+            <input 
+              type="checkbox" 
+              checked={showRayHelper}
+              onChange={(e) => setShowRayHelper(e.target.checked)}
+            />
+            Show Ray Helper
+          </label>
+          {hoveredObject && (
+            <div className="text-sm">
+              Hovered: <span className="text-green-400">{hoveredObject}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
       {showPopup && (
         <Popup onClose={handleClosePopup} />
       )}
@@ -211,9 +318,12 @@ const Home = () => {
       >
         <Stats />
         <Suspense fallback={<Loader />}>
+          <RaycasterHelper showHelper={showRayHelper} />
           <RaycasterHandler 
             circleRef={circleRef}
+            objectRefs={objectRefs}
             setIsIntersecting={setIsIntersecting}
+            setHoveredObject={setHoveredObject}
           />
           
           <directionalLight 
@@ -243,6 +353,12 @@ const Home = () => {
             setIsRotating={setIsRotating}
             setShowPopup={setShowPopup}
             circleRef={circleRef}
+            bottleRef={bottleRef}
+            sheepRef={sheepRef}
+            keyRingRef={keyRingRef}
+            timeCapsuleRef={timeCapsuleRef}
+            tripRef={tripRef}
+            sightRef={sightRef}
           />
           <Cloud 
           position={[0, -10, -48]} 

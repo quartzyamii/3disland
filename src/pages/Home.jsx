@@ -140,6 +140,9 @@ const Home = () => {
   const [hoveredObject, setHoveredObject] = useState(null);
   const [showRayHelper, setShowRayHelper] = useState(false);
   const [currentPopupObject, setCurrentPopupObject] = useState(null); // 현재 팝업 오브젝트 추가 // 레이 헬퍼 표시 여부
+  const [frameRate, setFrameRate] = useState(0);
+  const frameCount = useRef(0);
+  const lastTime = useRef(performance.now());
   
   // 6개 오브젝트 각각의 ref
   const bottleRef = useRef();
@@ -325,6 +328,30 @@ const Home = () => {
     };
   }, []);
 
+  // 프레임율 계산
+  useEffect(() => {
+    const updateFrameRate = () => {
+      frameCount.current++;
+      const now = performance.now();
+      const delta = now - lastTime.current;
+      
+      if (delta >= 1000) { // 1초마다 업데이트
+        const fps = Math.round((frameCount.current * 1000) / delta);
+        setFrameRate(fps);
+        frameCount.current = 0;
+        lastTime.current = now;
+      }
+      
+      requestAnimationFrame(updateFrameRate);
+    };
+    
+    const animationId = requestAnimationFrame(updateFrameRate);
+    
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
   return (
     <section className="w-full h-screen relative"
     style={{
@@ -356,6 +383,12 @@ const Home = () => {
               </span>
             </div>
           )}
+          {/* 프레임율 표시 */}
+          <div className="text-sm border-t border-gray-600 pt-2 mt-2">
+            <div className="text-cyan-400">
+              FPS: <span className="font-mono">{frameRate}</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -381,7 +414,6 @@ const Home = () => {
         onClick={handleCanvasClick}
         style={{ zIndex: 2 }}
       >
-        <Stats />
         <Suspense fallback={<Loader />}>
           <RaycasterHelper showHelper={showRayHelper} />
           <RaycasterHandler 

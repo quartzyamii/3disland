@@ -558,6 +558,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 rotation={[0,0,0]}
                 castShadow
                 receiveShadow
+                name="bottle"
       />
 
       <Sheep 
@@ -567,6 +568,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 rotation={[0.38,4.2,0.3]}
                 castShadow
                 receiveShadow
+                name="sheep"
       />
 
       <KeyRing 
@@ -576,6 +578,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 rotation={[Math.PI / 2, 0.2, -Math.PI / 2]}
                 castShadow
                 receiveShadow
+                name="keyRing"
       />
 
       <TimeCapsule 
@@ -585,6 +588,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 rotation={[6, 0.2, 0]}
                 castShadow
                 receiveShadow
+                name="timeCapsule"
       />
 
        <Trip
@@ -594,6 +598,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 rotation={[6, 1.2, 0.4]}
                 castShadow
                 receiveShadow
+                name="trip"
       />
 
       <Sight
@@ -603,6 +608,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 rotation={[6, 1, 0.2]}
                 castShadow
                 receiveShadow
+                name="sight"
       />
 
       <Glowstick 

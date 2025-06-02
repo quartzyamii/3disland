@@ -4,6 +4,12 @@ import {Stats} from '@react-three/drei';
 import Loader from '../components/Loader';
 import * as THREE from 'three';
 import Popup from '../components/Popup';
+import BottlePopup from '../components/popups/BottlePopup';
+import SheepPopup from '../components/popups/SheepPopup';
+import KeyRingPopup from '../components/popups/KeyRingPopup';
+import TimeCapsulePopup from '../components/popups/TimeCapsulePopup';
+import TripPopup from '../components/popups/TripPopup';
+import SightPopup from '../components/popups/SightPopup';
 import Star from '../components/Star';
 
 // import Sky from '../models/sky';
@@ -16,7 +22,7 @@ import Cloud from '../models/Cloud';
             POPUP
             </di v> */}
 
-const RaycasterHandler = ({ circleRef, objectRefs, setIsIntersecting, setHoveredObject }) => {
+const RaycasterHandler = ({ objectRefs, setIsIntersecting, setHoveredObject }) => {
   const { camera } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
 
@@ -30,15 +36,8 @@ const RaycasterHandler = ({ circleRef, objectRefs, setIsIntersecting, setHovered
     const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     
     raycaster.current.setFromCamera({ x, y }, camera);
-  
-    // 원형 메쉬 감지
-    let isCircleIntersecting = false;
-    if (circleRef && circleRef.current) {
-      const intersects = raycaster.current.intersectObject(circleRef.current);
-      isCircleIntersecting = intersects.length > 0;
-    }
 
-    // 6개 오브젝트 감지
+    // 모든 오브젝트 감지 (원형 메쉬 포함)
     const objects = Object.values(objectRefs || {}).filter(ref => ref && ref.current);
     let isObjectIntersecting = false;
     let hoveredObjectName = null;
@@ -47,12 +46,32 @@ const RaycasterHandler = ({ circleRef, objectRefs, setIsIntersecting, setHovered
       const intersects = raycaster.current.intersectObjects(objects.map(ref => ref.current), true);
       if (intersects.length > 0) {
         isObjectIntersecting = true;
-        hoveredObjectName = intersects[0].object.name || intersects[0].object.parent?.name || 'Unknown';
-        console.log('Hovered object:', hoveredObjectName, intersects[0].object);
+        
+        // 오브젝트 이름을 찾기 위한 로직
+        const intersectedObject = intersects[0].object;
+        let objectName = intersectedObject.name || intersectedObject.parent?.name;
+        
+        // 만약 name이 없다면 ref와 매칭하여 찾기
+        if (!objectName || objectName === '') {
+          const refEntries = Object.entries(objectRefs);
+          for (const [key, ref] of refEntries) {
+            if (ref.current && (
+              ref.current === intersectedObject ||
+              ref.current === intersectedObject.parent ||
+              ref.current.children.includes(intersectedObject)
+            )) {
+              objectName = key;
+              break;
+            }
+          }
+        }
+        
+        hoveredObjectName = objectName || 'Unknown';
+        console.log('Hovered object:', hoveredObjectName, intersectedObject);
       }
     }
 
-    setIsIntersecting(isCircleIntersecting || isObjectIntersecting);
+    setIsIntersecting(isObjectIntersecting);
     setHoveredObject(hoveredObjectName);
   };
 
@@ -119,7 +138,8 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hoveredObject, setHoveredObject] = useState(null);
-  const [showRayHelper, setShowRayHelper] = useState(false); // 레이 헬퍼 표시 여부
+  const [showRayHelper, setShowRayHelper] = useState(false);
+  const [currentPopupObject, setCurrentPopupObject] = useState(null); // 현재 팝업 오브젝트 추가 // 레이 헬퍼 표시 여부
   
   // 6개 오브젝트 각각의 ref
   const bottleRef = useRef();
@@ -132,7 +152,19 @@ const Home = () => {
   const circleRef = useRef();
   const IslandRef = useRef();
   const animationFrame = useRef(null);
-  const targetRotation = 6.256991860863604; // 351.9130464139269 degrees
+  
+  // 각 오브젝트별 목표 회전 각도 설정
+  const targetRotations = {
+    bottle: -0.41703602386703703,   // bottle이 정면에 오는 각도 (-23.89도)
+    sheep: -1.0099029536450916,     // sheep이 정면에 오는 각도 (-57.86도)
+    keyRing: -1.5594924094309397,   // keyRing이 정면에 오는 각도 (-89.35도)
+    timeCapsule: -2.1106584060172398, // timeCapsule이 정면에 오는 각도 (-120.93도)
+    trip: -2.914987524164666,       // trip이 정면에 오는 각도 (-167.02도)
+    sight: -4.070481939678125,      // sight가 정면에 오는 각도 (-233.22도)
+    glowstick: -6.311178841895803   // glowstick가 정면에 오는 각도 (-361.60도)
+  };
+  
+  const [currentTargetRotation, setCurrentTargetRotation] = useState(null);
   const rotationSpeed = 0.02;
   const popupShown = useRef(false);
   const initialRotation = useRef(0);
@@ -144,7 +176,8 @@ const Home = () => {
     keyRing: keyRingRef,
     timeCapsule: timeCapsuleRef,
     trip: tripRef,
-    sight: sightRef
+    sight: sightRef,
+    glowstick: circleRef
   };
 
   //화면위치,스케일조정(편집중)
@@ -203,27 +236,29 @@ const Home = () => {
   const ANIMATION_DURATION = 1000; // ms, 더 부드럽게
   const animationStart = useRef(null);
 
-  const animateRotation = (timestamp) => {
-    if (!IslandRef.current) return;
+  const animateRotation = (timestamp, clickedObjectName) => {
+    if (!IslandRef.current || !currentTargetRotation) return;
     if (!animationStart.current) animationStart.current = timestamp;
 
     const elapsed = timestamp - animationStart.current;
     const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
     const easedProgress = customEase(progress);
-    const newRotation = initialRotation.current + (targetRotation - initialRotation.current) * easedProgress;
+    const newRotation = initialRotation.current + (currentTargetRotation - initialRotation.current) * easedProgress;
     IslandRef.current.rotation.y = newRotation;
 
     if (progress > 0.7 && !popupShown.current) {
       setShowPopup(true);
+      setCurrentPopupObject(clickedObjectName); // 클릭된 오브젝트 이름 직접 사용
       popupShown.current = true;
     }
 
     if (progress < 1) {
-      animationFrame.current = requestAnimationFrame(animateRotation);
+      animationFrame.current = requestAnimationFrame((ts) => animateRotation(ts, clickedObjectName));
     } else {
-      IslandRef.current.rotation.y = targetRotation;
+      IslandRef.current.rotation.y = currentTargetRotation;
       setIsRotating(false);
       animationStart.current = null;
+      setCurrentTargetRotation(null);
       if (animationFrame.current) {
         cancelAnimationFrame(animationFrame.current);
         animationFrame.current = null;
@@ -232,36 +267,53 @@ const Home = () => {
   };
 
   const handleCanvasClick = (e) => {
-    if (isRotating) return;
-    if (isIntersecting && !showPopup && IslandRef.current) {
+    if (isRotating || showPopup) return;
+    
+    console.log('Canvas clicked!', e.target);
+    
+    // 간단한 방법: 현재 호버된 오브젝트가 있는지 확인
+    if (isIntersecting && hoveredObject && IslandRef.current) {
+      console.log('Clicked object:', hoveredObject);
+      
+      // 목표 회전 각도 결정
+      const targetRotation = targetRotations[hoveredObject];
+      
+      if (targetRotation === undefined) {
+        console.log('No target rotation for:', hoveredObject);
+        return;
+      }
+      
       const current = IslandRef.current.rotation.y;
-      const normalizedCurrent = ((current % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-      const normalizedTarget = ((targetRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-      if (Math.abs(normalizedCurrent - normalizedTarget) < 0.001) return;
-
+      
+      // getOptimizedRotation 함수를 사용하여 최적화된 회전 계산
+      const optimizedTarget = getOptimizedRotation(current, targetRotation);
+      
+      console.log('Current rotation:', current, 'Target:', optimizedTarget);
+      
+      // 현재 위치와 목표 위치가 거의 같으면 회전하지 않음
+      if (Math.abs(current - optimizedTarget) < 0.001) {
+        console.log('Already at target position');
+        return;
+      }
+      
+      setCurrentTargetRotation(optimizedTarget);
       setIsRotating(true);
       setIsIntersecting(false);
       popupShown.current = false;
       initialRotation.current = current;
       animationStart.current = null;
-      requestAnimationFrame(animateRotation);
-
-      // 클릭 이벤트를 한 번 더 강제로 발생시키는 부분 주석 처리
-      // const canvas = document.getElementById('three-canvas');
-      // if (canvas) {
-      //   canvas.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-      // }
+      
+      requestAnimationFrame((ts) => animateRotation(ts, hoveredObject));
     }
   };
 
   const handleClosePopup = () => {
     setShowPopup(false);
+    setCurrentPopupObject(null); // 팝업 오브젝트 초기화
     if (animationFrame.current) {
       cancelAnimationFrame(animationFrame.current);
     }
-    if (Island.current) {
-      Island.current.rotation.y = 0;
-    }
+    // 회전 초기화 제거 - 현재 위치 그대로 유지
   };
 
   useEffect(() => {
@@ -298,13 +350,26 @@ const Home = () => {
           {hoveredObject && (
             <div className="text-sm">
               Hovered: <span className="text-green-400">{hoveredObject}</span>
+              <br />
+              Target Rotation: <span className="text-yellow-400">
+                {targetRotations[hoveredObject]?.toFixed(3)} rad
+              </span>
             </div>
           )}
         </div>
       </div>
 
-      {showPopup && (
-        <Popup onClose={handleClosePopup} />
+      {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}
+      {showPopup && currentPopupObject && (
+        <>
+          {currentPopupObject === 'bottle' && <BottlePopup onClose={handleClosePopup} />}
+          {currentPopupObject === 'sheep' && <SheepPopup onClose={handleClosePopup} />}
+          {currentPopupObject === 'keyRing' && <KeyRingPopup onClose={handleClosePopup} />}
+          {currentPopupObject === 'timeCapsule' && <TimeCapsulePopup onClose={handleClosePopup} />}
+          {currentPopupObject === 'trip' && <TripPopup onClose={handleClosePopup} />}
+          {currentPopupObject === 'sight' && <SightPopup onClose={handleClosePopup} />}
+          {currentPopupObject === 'glowstick' && <Popup onClose={handleClosePopup} />}
+        </>
       )}
 
       <Canvas 
@@ -320,7 +385,6 @@ const Home = () => {
         <Suspense fallback={<Loader />}>
           <RaycasterHelper showHelper={showRayHelper} />
           <RaycasterHandler 
-            circleRef={circleRef}
             objectRefs={objectRefs}
             setIsIntersecting={setIsIntersecting}
             setHoveredObject={setHoveredObject}

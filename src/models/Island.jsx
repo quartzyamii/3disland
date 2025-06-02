@@ -138,14 +138,14 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
     <a.group ref={ref} {...props}>
 
       <mesh castShadow receiveShadow geometry={nodes.Wood.geometry} material={materials.wood} />
-      <mesh
+      {/* <mesh
         castShadow
         receiveShadow
         geometry={nodes.Road.geometry}
         material={materials.Road}
         position={[0, -0.058, 0]}
         scale={1.059}
-      />
+      /> */}
       <group position={[-0.937, 1.261, 1.074]} scale={[0.131, 0.148, 0.131]}>
         <mesh
           castShadow
@@ -626,6 +626,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 scale={[0.9, 0.9, 0.9]}
                 rotation={[Math.PI / 2.1, Math.PI / 2.2, 2.9]}
                 onClick={handleCircleClick}
+                name="glowstick"
             >
                 <cylinderGeometry args={[0.5, 0.5, 0.1, 32]} />
                 <meshBasicMaterial 

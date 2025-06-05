@@ -158,13 +158,13 @@ const Home = () => {
   
   // 각 오브젝트별 목표 회전 각도 설정
   const targetRotations = {
-    glowstick: -24.109931, // -1650.69°
-    sheep: -25.142490, // -1709.85°
-    keyRing: -25.860694, // -1751.00°
-    sight: -26.640826, // -1795.70°
-    trip: -27.674977, // -1854.95°
-    timeCapsule: -28.540110, // -1904.52°
-    bottle: -29.243263, // -1944.81°
+    glowstick: 1.019497, // -210.88°
+    bottle: 1.925523, // -158.97°
+    timeCapsule: 2.873209, // -104.67°
+    trip: 3.693562, // -57.66°
+    sight: 4.790555, // 5.19°
+    keyRing: 5.578019, // 50.31°
+    sheep: 6.277909, // 90.41°
   };
   
   const [currentTargetRotation, setCurrentTargetRotation] = useState(null);

@@ -187,7 +187,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['MainTree001'].geometry}
+        geometry={nodes['MainTree001'].geometry} //
         material={materials['Maintree.001']}
         position={[1.171, 1.029, -0.537]}
         scale={[0.232, 0.357, 0.232]}
@@ -300,7 +300,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['MainTree'].geometry}
+        geometry={nodes['MainTree'].geometry} //
         material={materials.Maintree}
         position={[0.838, 1.156, 0.767]}
         scale={[0.232, 0.541, 0.232]}
@@ -450,7 +450,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['MainTree005'].geometry}
+        geometry={nodes['MainTree005'].geometry} //
         material={materials['candytree.001']}
         position={[3.135, 0.419, -1.496]}
         scale={[0.156, 0.175, 0.156]}
@@ -458,32 +458,51 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['MainTree006'].geometry}
+        geometry={nodes['MainTree006'].geometry} //
         material={materials['candytree.001']}
         position={[3.135, 0.534, -1.496]}
         scale={[0.156, 0.197, 0.156]}
       />
-      <mesh
+      <mesh 
         castShadow
         receiveShadow
-        geometry={nodes['MainTree004'].geometry}
+        geometry={nodes['MainTree004'].geometry} //캡슐옆나무
         material={materials['Maintree.004']}
-        position={[-1.397, 0.94, -2.486]}
-        scale={[0.232, 0.541, 0.232]}
+        position={[-1.6, 1, -1.9]}
+        scale={[0.24, 0.6, 0.24]}
+        rotation={[-0, 0, -0.01]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.MainTreeBranch003.geometry}
+        geometry={nodes.MainTreeBranch003.geometry}//캡슐옆나무
         material={materials['MainTreeBranch.004']}
-        position={[-1.389, 0.839, -2.495]}
+        position={[-1.6, 0.7, -1.9]}
         rotation={[-Math.PI, 0, -Math.PI]}
-        scale={[-0.057, -0.21, -0.057]}
+        scale={[-0.057, -0.3, -0.057]}
+      />
+      <mesh 
+        castShadow
+        receiveShadow
+        geometry={nodes['MainTree004'].geometry} //캡슐옆나무1
+        material={materials['Maintree.004']}
+        position={[-2.6, 0.43, 2.3]}
+        scale={[0.15, 0.45, 0.15]}
+        rotation={[-0, 0, -0.01]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['MainTree002'].geometry}
+        geometry={nodes.MainTreeBranch003.geometry}//캡슐옆나무1
+        material={materials['MainTreeBranch.004']}
+        position={[-2.6, 0.43, 2.3]}
+        rotation={[-Math.PI, 0, -Math.PI]}
+        scale={[-0.057, -0.3, -0.057]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes['MainTree002'].geometry} //
         material={materials.candytree}
         position={[3.135, 0.534, 1.456]}
         scale={[0.156, 0.197, 0.156]}
@@ -491,7 +510,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['MainTree003'].geometry}
+        geometry={nodes['MainTree003'].geometry} //
         material={materials.candytree}
         position={[3.135, 0.419, 1.456]}
         scale={[0.156, 0.175, 0.156]}
@@ -506,16 +525,17 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
         scale={[-0.039, -0.08, -0.039]}
       />
       <mesh
-        castShadow
+        castShadow //별보틀옆
         receiveShadow
         geometry={nodes.YellowTreeBranch001.geometry}
         material={materials['MainTreeBranch.006']}
-        position={[-3.107, 0.537, -0.722]}
+        position={[-3.3, 0.537, -0.07]}
         rotation={[-Math.PI, 0, -Math.PI]}
         scale={[-0.033, -0.09, -0.033]}
       />
-      <group position={[-3.105, 0.911, -0.73]} scale={[0.131, 0.179, 0.131]}>
-        <mesh
+      <group position={[-3.3, 0.911, -0.07]} 
+            scale={[0.131, 0.179, 0.131]}>
+        <mesh //별보틀 옆 노란나무
           castShadow
           receiveShadow
           geometry={nodes.YellowTree001_1.geometry}
@@ -534,6 +554,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
           material={materials['Glass.004']}
         />
       </group>
+      
       <mesh
         castShadow
         receiveShadow
@@ -544,18 +565,18 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
         scale={[0.375, 0.371, 0.427]}
       />
       <StarBottle 
-                position={[-2, 0.75, -1.3]} 
-                scale={[0.34, 0.34, 0.34]} 
-                rotation={[-0.1,0,0.13]}
+                position={[-2.3, 0.763, -0.78]} 
+                scale={[0.35, 0.35, 0.35]} 
+                rotation={[-0.09,0,0.17]}
                 castShadow
                 receiveShadow
         />
 
       <Bottle 
                 ref={bottleRef}
-                position={[-2, 0.75, -1.3]} 
+                position={[-2.3, 0.763, -0.78]} 
                 scale={[0.34, 0.34, 0.34]} 
-                rotation={[-0.1,0,0.13]}
+                rotation={[-0.09,0,0.17]}
                 castShadow
                 receiveShadow
                 name="bottle"
@@ -583,9 +604,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
 
       <TimeCapsule 
                 ref={timeCapsuleRef}
-                position={[-0.2, 0.9, -2.43]} 
+                position={[-0.2, 0.9, -2.3]} 
                 scale={[0.6, 0.6, 0.6]} 
-                rotation={[6.2, 0.2, 1.3]}
+                rotation={[6.2, 0.32, 1.3]}
                 castShadow
                 receiveShadow
                 name="timeCapsule"
@@ -612,8 +633,8 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       />
 
       <Glowstick 
-                position={[-2.6, 1.08, 1.56]} //-0.4, 1.2, 2.9
-                scale={[0.13, 0.13, 0.13]} //0.13, 0.13, 0.13
+                position={[-2.5, 1.08, 1.5]} //-0.4, 1.2, 2.9
+                scale={[0.14, 0.14, 0.14]} //0.13, 0.13, 0.13
                 rotation={[Math.PI / 1.2, Math.PI / 1, 2]} //Math.PI / 1.2, Math.PI / 1.4, 2
                 castShadow
                 receiveShadow
@@ -622,8 +643,8 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
             {/* 클릭 감지용 원형 메쉬 */}
             <mesh
                 ref={circleRef}
-                position={[-2.2, 1.08, 1.32]}
-                scale={[0.9, 0.9, 0.9]}
+                position={[-2.1, 1.09, 1.25]}
+                scale={[1, 1, 1]}
                 rotation={[Math.PI / 2.1, 3, 2.4]}
                 onClick={handleCircleClick}
                 name="glowstick"

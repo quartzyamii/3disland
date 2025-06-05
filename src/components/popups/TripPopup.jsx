@@ -127,6 +127,14 @@ const TripPopup = ({ onClose }) => {
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
         />
 
+         {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
+        >
+          X
+        </button>
+
         <div className="flex gap-6">
           {/* 둥근 이미지 영역 */}
           <div className="w-1/3 relative">
@@ -142,21 +150,15 @@ const TripPopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="trip-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+              <h2 className="trip-text text-3xl font-bold text-black mb-4 tracking-wide">
                 내 첫 해외 여행, 오키나와
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="trip-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+              <p className="trip-text text-black leading-relaxed text-base whitespace-pre-line">
                 중학교 1학년, 처음으로 비행기를 타고 떠나 오키나와에 도착했다. 도착하자마자 탁 트이는 바다와 발 아래에는 별 모양과 거북이 모양으로 이뤄진 별모래들이 내 발을 반겨주었다. 이 키링에는 그 곳의 별모래가 같이 담겨져 있다.
               </p>
             </div>
             <div className="flex justify-end mt-3">
-              <button
-                onClick={onClose}
-                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
-              >
-                닫기
-              </button>
             </div>
           </div>
         </div>

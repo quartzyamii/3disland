@@ -71,6 +71,16 @@ const SightPopup = ({ onClose }) => {
           .animate-pulse-gentle {
             animation: pulse-gentle 4s ease-in-out infinite;
           }
+          
+          /* 물고기 위아래 움직임 애니메이션 */
+          @keyframes fish-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+          }
+          
+          .animate-fish-float {
+            animation: fish-float 2.5s ease-in-out infinite;
+          }
         `}
       </style>
       
@@ -120,12 +130,25 @@ const SightPopup = ({ onClose }) => {
                 w-[640px] 
                 shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
 
-         {/*  별 장식 */}
+         {/*  물고기 장식 */}
         <img
-          src="/assets/images/Turtle2.png"
-          alt="Turtle"
-          className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
+          src="/assets/images/GreenFish.png"
+          alt="Fish"
+          className="absolute top-[-80px] left-[-80px] w-36 animate-fish-float opacity-100"
         />
+        <img
+          src="/assets/images/BlueFish.png"
+          alt="Fish"
+          className="absolute top-[230px] left-[580px] w-36 animate-fish-float opacity-100"
+        />
+
+ {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
+        >
+          X
+        </button>
 
         <div className="flex gap-6">
            {/* 둥근 이미지 영역 */}
@@ -142,21 +165,15 @@ const SightPopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="sight-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+              <h2 className="sight-text text-3xl font-bold text-black mb-4 tracking-wide">
                 풍경 만들기 
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="sight-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+              <p className="sight-text text-black leading-relaxed text-base whitespace-pre-line">
                 초등학교 6학년, 미술학원에서 보내는 마지막 겨울방학 시간에 단짝친구와 함께 방학 특강으로 풍경을 만들었다. 직접 모양을 빚고 그 위에 물감을 칠하는 과정이 정말 즐거웠다. 이 풍경에 먼지가 가득 쌓였지만 이따금 꺼내 흔들어볼 때 나는 소리는 여전히 청량감이 가득하다.
               </p>
             </div>
             <div className="flex justify-end mt-3">
-              <button
-                onClick={onClose}
-                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
-              >
-                닫기
-              </button>
             </div>
           </div>
         </div>

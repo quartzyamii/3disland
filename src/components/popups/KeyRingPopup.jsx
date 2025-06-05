@@ -127,6 +127,14 @@ const KeyRingPopup = ({ onClose }) => {
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
         />
 
+         {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
+        >
+          X
+        </button>
+
         <div className="flex gap-6">
           {/* 둥근 이미지 영역 */}
           <div className="w-1/3 relative">
@@ -142,21 +150,15 @@ const KeyRingPopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="keyring-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+              <h2 className="keyring-text text-3xl font-bold text-black mb-4 tracking-wide">
                 내가 직접 만든 자개 키링
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="keyring-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+              <p className="keyring-text text-black leading-relaxed text-base whitespace-pre-line">
                 초등학교 입학한 1학년, 입학 기념으로 가족들과 함께 인사동으로 나들이를 갔다. 인사동 쌈지길 지하로 내려가면 공방들이 있었고, 그곳에서 자개 키링을 만들 수 있는 체험을 했다. 처음으로 하나하나 자개를 집게로 집어 수놓아 만든 작품이었던 만큼 애정이 깊다. 
               </p>
             </div>
             <div className="flex justify-end mt-3">
-              <button
-                onClick={onClose}
-                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
-              >
-                닫기
-              </button>
             </div>
           </div>
         </div>

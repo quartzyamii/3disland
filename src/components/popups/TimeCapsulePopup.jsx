@@ -130,6 +130,14 @@ const TimeCapsulePopup = ({ onClose }) => {
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
         />
 
+         {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
+        >
+          X
+        </button>
+
         <div className="flex gap-6">
            {/* 둥근 이미지 영역 */}
           <div className="w-1/3 relative">
@@ -145,21 +153,15 @@ const TimeCapsulePopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="timecapsule-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+              <h2 className="timecapsule-text text-3xl font-bold text-black mb-4 tracking-wide">
                 고1의 내가 고3의 나에게
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="timecapsule-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+              <p className="timecapsule-text text-black leading-relaxed text-base whitespace-pre-line">
                 고등학교 1학년 때, 고3의 나에게 보내는 편지를 담아 학교에서 만든 타임캡슐이다. 이 타임 캡슐을 펼쳐보면 "할수있다"라는 말만이 종이를 빼곡히 채우고 있다. 이 때의 나는 지금의 나를 간절히 믿고 싶었던 마음이 고스란히 느껴진다. 
               </p>
             </div>
             <div className="flex justify-end mt-3">
-              <button
-                onClick={onClose}
-                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
-              >
-                닫기
-              </button>
             </div>
           </div>
         </div>

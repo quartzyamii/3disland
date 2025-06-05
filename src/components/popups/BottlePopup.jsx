@@ -122,10 +122,18 @@ const BottlePopup = ({ onClose }) => {
 
         {/*  별 장식 */}
         <img
-          src="/assets/images/Turtle2.png"
+          src="/assets/images/Star.png"
           alt="Turtle"
-          className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
+          className="absolute top-[-70px] left-[-70px] w-36 animate-wiggle opacity-100"
         />
+
+        {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
+        >
+          X
+        </button>
 
         <div className="flex gap-6">
            {/* 둥근 이미지 영역 */}
@@ -142,21 +150,16 @@ const BottlePopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="bottle-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+              <h2 className="bottle-text text-3xl font-bold text-black mb-4 tracking-wide">
                 친구가 준 마음의 선물
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="bottle-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+              <p className="bottle-text text-black leading-relaxed text-base whitespace-pre-line">
                 별모양으로 접은 종이들 사이에 친구가 써준 쪽지 하나가 담겨 있다. 받았을 때 몰랐는데, 안의 내부가 궁금해 뚜껑을 뺀 그날, 친구의 쪽지를 발견하고 엄청 놀랐다. 그 쪽지에는 나를 향해 응원하는 메시지가 함께 담겨 있었다. 그 쪽지를 읽고 나서야, 이 병이 단순한 장식이 아니라 친구의 마음을 담은 소중한 선물로 간직하게 되었다.
               </p>
             </div>
             <div className="flex justify-end mt-3">
-              <button
-                onClick={onClose}
-                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
-              >
-                닫기
-              </button>
+
             </div>
           </div>
         </div>

@@ -127,6 +127,14 @@ const Popup = ({ onClose }) => {
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
         />
 
+        {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
+        >
+          X
+        </button>
+
         <div className="flex gap-6">
             {/* 둥근 이미지 영역 */}
           <div className="w-1/3 relative">
@@ -142,21 +150,13 @@ const Popup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="bottle-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+              <h2 className="bottle-text text-3xl font-bold text-black mb-4 tracking-wide">
                 대학 축제, 야광팔찌
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="bottle-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+              <p className="bottle-text text-black leading-relaxed text-base whitespace-pre-line">
                 대학 축제에서 친구들과 함께한 순간을 담고 있는 야광팔찌이다. 함께 늦은 밤 퍼레이드를 하는 친구들과 함께 퍼레이드 길을 따라 미술원까지 걷고 함께하는 경험은 잊지 못할 추억이 되었다. 지금은 더이상 빛나지 않지만, 이 팔찌를 볼 때 내 마음은 빛나는 그 때로 되돌아간다. 
               </p>
-            </div>
-            <div className="flex justify-end mt-6">
-              <button
-                onClick={onClose}
-                className="bg-sky-500 text-white py-2 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
-              >
-                닫기
-              </button>
             </div>
           </div>
         </div>

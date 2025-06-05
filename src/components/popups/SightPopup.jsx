@@ -153,9 +153,9 @@ const SightPopup = ({ onClose }) => {
         <div className="flex gap-6">
            {/* 둥근 사각형 이미지 영역 */}
   <div className="w-1/3 relative">
-    <div className="w-full h-48 rounded-3xl overflow-hidden border-2 border-white/40 shadow-inner">
+    <div className="w-full h-48 rounded-3xl overflow-hidden border-transparent border-trasparent ">
       <img
-        src="/assets/images/Sight.png"
+        src="/assets/images/Sight2.png"
         alt="Sheep"
         lassName="w-[85%] h-[85%] object-cover opacity-90"
       />

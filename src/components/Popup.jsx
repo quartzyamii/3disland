@@ -122,9 +122,9 @@ const Popup = ({ onClose }) => {
 
        {/*  별 장식 */}
         <img
-          src="/assets/images/Turtle2.png"
-          alt="Turtle"
-          className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
+          src="/assets/images/Star.png"
+          alt="Star"
+          className="absolute top-[-90px] left-[-70px] w-36 animate-wiggle opacity-100"
         />
 
         {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
@@ -136,16 +136,16 @@ const Popup = ({ onClose }) => {
         </button>
 
         <div className="flex gap-6">
-            {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
-            <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
-              <img
-                src="/assets/images/Glowstick.png"
-                alt="Glowstick"
-                className="w-full h-full object-cover opacity-90"
-              />
-            </div>
-          </div>
+             {/* 둥근 사각형 이미지 영역 */}
+  <div className="w-1/3 relative">
+    <div className="w-full h-48 rounded-3xl ">
+      <img
+        src="/assets/images/Glowstick2.png"
+        alt="Sheep"
+        lassName="w-[85%] h-[85%] object-cover opacity-90"
+      />
+    </div>
+  </div>
 
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
@@ -153,7 +153,7 @@ const Popup = ({ onClose }) => {
               <h2 className="bottle-text text-3xl font-bold text-black mb-4 tracking-wide">
                 대학 축제, 야광팔찌
               </h2>
-              <div className="w-full h-px bg-sky-200 mb-4"></div>
+              <div className="w-full h-px bg-white mb-4"></div>
               <p className="bottle-text text-black leading-relaxed text-base whitespace-pre-line">
                 대학 축제에서 친구들과 함께한 순간을 담고 있는 야광팔찌이다. 함께 늦은 밤 퍼레이드를 하는 친구들과 함께 퍼레이드 길을 따라 미술원까지 걷고 함께하는 경험은 잊지 못할 추억이 되었다. 지금은 더이상 빛나지 않지만, 이 팔찌를 볼 때 내 마음은 빛나는 그 때로 되돌아간다. 
               </p>

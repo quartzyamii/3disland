@@ -137,7 +137,7 @@ const BottlePopup = ({ onClose }) => {
 
         <div className="flex gap-6">
            {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
+          {/* <div className="w-1/3 relative">
             <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
               <img
                 src="/assets/images/Glowstick.png"
@@ -145,15 +145,15 @@ const BottlePopup = ({ onClose }) => {
                 className="w-full h-full object-cover opacity-90"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* 감성 텍스트 영역 */}
-          <div className="w-2/3 flex flex-col justify-between">
+          <div className="w-full flex flex-col justify-between">
             <div>
-              <h2 className="bottle-text text-3xl font-bold text-black mb-4 tracking-wide">
+              <h2 className="bottle-text text-3xl font-bold text-black mb-4 tracking-wide text-center">
                 친구가 준 마음의 선물
               </h2>
-              <div className="w-full h-px bg-sky-200 mb-4"></div>
+              <div className="w-full h-px bg-white mb-4"></div>
               <p className="bottle-text text-black leading-relaxed text-base whitespace-pre-line">
                 별모양으로 접은 종이들 사이에 친구가 써준 쪽지 하나가 담겨 있다. 받았을 때 몰랐는데, 안의 내부가 궁금해 뚜껑을 뺀 그날, 친구의 쪽지를 발견하고 엄청 놀랐다. 그 쪽지에는 나를 향해 응원하는 메시지가 함께 담겨 있었다. 그 쪽지를 읽고 나서야, 이 병이 단순한 장식이 아니라 친구의 마음을 담은 소중한 선물로 간직하게 되었다.
               </p>

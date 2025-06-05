@@ -156,7 +156,7 @@ const TimeCapsulePopup = ({ onClose }) => {
               <h2 className="timecapsule-text text-3xl font-bold text-black mb-4 tracking-wide">
                 고1의 내가 고3의 나에게
               </h2>
-              <div className="w-full h-px bg-sky-200 mb-4"></div>
+              <div className="w-full h-px bg-white mb-4"></div>
               <p className="timecapsule-text text-black leading-relaxed text-base whitespace-pre-line">
                 고등학교 1학년 때, 고3의 나에게 보내는 편지를 담아 학교에서 만든 타임캡슐이다. 이 타임 캡슐을 펼쳐보면 "할수있다"라는 말만이 종이를 빼곡히 채우고 있다. 이 때의 나는 지금의 나를 간절히 믿고 싶었던 마음이 고스란히 느껴진다. 
               </p>

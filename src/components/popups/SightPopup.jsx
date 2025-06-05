@@ -151,16 +151,16 @@ const SightPopup = ({ onClose }) => {
         </button>
 
         <div className="flex gap-6">
-           {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
-            <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
-              <img
-                src="/assets/images/Glowstick.png"
-                alt="Glowstick"
-                className="w-full h-full object-cover opacity-90"
-              />
-            </div>
-          </div>
+           {/* 둥근 사각형 이미지 영역 */}
+  <div className="w-1/3 relative">
+    <div className="w-full h-48 rounded-3xl overflow-hidden border-2 border-white/40 shadow-inner">
+      <img
+        src="/assets/images/Sight.png"
+        alt="Sheep"
+        lassName="w-[85%] h-[85%] object-cover opacity-90"
+      />
+    </div>
+  </div>
 
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
@@ -168,7 +168,7 @@ const SightPopup = ({ onClose }) => {
               <h2 className="sight-text text-3xl font-bold text-black mb-4 tracking-wide">
                 풍경 만들기 
               </h2>
-              <div className="w-full h-px bg-sky-200 mb-4"></div>
+              <div className="w-full h-px bg-white mb-4"></div>
               <p className="sight-text text-black leading-relaxed text-base whitespace-pre-line">
                 초등학교 6학년, 미술학원에서 보내는 마지막 겨울방학 시간에 단짝친구와 함께 방학 특강으로 풍경을 만들었다. 직접 모양을 빚고 그 위에 물감을 칠하는 과정이 정말 즐거웠다. 이 풍경에 먼지가 가득 쌓였지만 이따금 꺼내 흔들어볼 때 나는 소리는 여전히 청량감이 가득하다.
               </p>

@@ -121,11 +121,11 @@ const KeyRingPopup = ({ onClose }) => {
                 shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
 
         {/*  별 장식 */}
-        <img
+        {/* <img
           src="/assets/images/Turtle2.png"
           alt="Turtle"
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
-        />
+        /> */}
 
          {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
         <button
@@ -137,7 +137,7 @@ const KeyRingPopup = ({ onClose }) => {
 
         <div className="flex gap-6">
           {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
+          {/* <div className="w-1/3 relative">
             <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
               <img
                 src="/assets/images/keyring.png"
@@ -145,15 +145,15 @@ const KeyRingPopup = ({ onClose }) => {
                 className="w-full h-full object-cover opacity-90"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* 감성 텍스트 영역 */}
-          <div className="w-2/3 flex flex-col justify-between">
+          <div className="w-full flex flex-col justify-between">
             <div>
-              <h2 className="keyring-text text-3xl font-bold text-black mb-4 tracking-wide">
+              <h2 className="keyring-text text-3xl font-bold text-black mb-4 tracking-wide text-center">
                 내가 직접 만든 자개 키링
               </h2>
-              <div className="w-full h-px bg-sky-200 mb-4"></div>
+              <div className="w-full h-px bg-white mb-4"></div>
               <p className="keyring-text text-black leading-relaxed text-base whitespace-pre-line">
                 초등학교 입학한 1학년, 입학 기념으로 가족들과 함께 인사동으로 나들이를 갔다. 인사동 쌈지길 지하로 내려가면 공방들이 있었고, 그곳에서 자개 키링을 만들 수 있는 체험을 했다. 처음으로 하나하나 자개를 집게로 집어 수놓아 만든 작품이었던 만큼 애정이 깊다. 
               </p>

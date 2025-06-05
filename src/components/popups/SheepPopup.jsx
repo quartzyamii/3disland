@@ -111,43 +111,45 @@ const SheepPopup = ({ onClose }) => {
       {/* 소원 텍스트 */}
       <animated.div 
         style={fadeIn}
-        className="fixed top-[300px] left-[35%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+        className="fixed top-[320px] left-[35%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
       >
         <p className="sheep-wish text-2xl text-white text-center opacity-90"
-           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+           style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 0, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 0, 0.5))' }}>
           똥강아지<br /> 건강해라<br /> 모든면에서 <br /> -큰이모가-
         </p>
       </animated.div>
 
       <animated.div 
         style={fadeIn}
-        className="fixed top-[475px] left-[36%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+        className="fixed top-[495px] left-[36%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
       >
         <p className="sheep-wish text-2xl text-white text-center opacity-90"
-           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+           style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 0, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 0, 0.5))' }}>
           민진아<br /> 예쁘게<br /> 건강하게 <br /> 자라렴 <br /> -몽실 이모가-
         </p>
       </animated.div>
 
       <animated.div 
         style={fadeIn}
-        className="fixed top-[300px] left-[57%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+        className="fixed top-[320px] left-[57%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
       >
         <p className="sheep-wish text-2xl text-white text-center opacity-90"
-           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+           style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 0, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 0, 0.5))' }}>
           이쁜 민진아. <br /> 더 이쁘고 참하고 <br /> 건강한 공주님 되세요 <br /> 이천사년 오월이십이일 <br /> 외할머니
         </p>
       </animated.div>
 
       <animated.div 
         style={fadeIn}
-        className="fixed top-[530px] left-[55%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+        className="fixed top-[550px] left-[55%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
       >
         <p className="sheep-wish text-2xl text-white text-center opacity-90"
-           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+           style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 0, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 0, 0.5))' }}>
           언능 언능 크거라 <br /> 많이 놀아줄게 <br /> -외삼촌, 외숙모가-
         </p>
       </animated.div>
+
+
 
     <animated.div
       style={fadeIn}
@@ -171,11 +173,11 @@ const SheepPopup = ({ onClose }) => {
                 shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
 
          {/*  별 장식 */}
-        <img
+        {/* <img
           src="/assets/images/Turtle2.png"
           alt="Turtle"
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
-        />
+        /> */}
 
          {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
         <button
@@ -186,16 +188,16 @@ const SheepPopup = ({ onClose }) => {
         </button>
 
         <div className="flex gap-6">
-           {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
-            <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
-              <img
-                src="/assets/images/Glowstick.png"
-                alt="Glowstick"
-                className="w-full h-full object-cover opacity-90"
-              />
-            </div>
-          </div>
+           {/* 둥근 사각형 이미지 영역 */}
+  <div className="w-1/3 relative">
+    <div className="w-full h-48 rounded-3xl">
+      <img
+        src="/assets/images/Sheep2.png"
+        alt="Sheep"
+        lassName="w-[85%] h-[85%] object-cover opacity-90"
+      />
+    </div>
+  </div>
 
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
@@ -203,8 +205,8 @@ const SheepPopup = ({ onClose }) => {
               <h2 className="sheep-text text-3xl font-bold text-black mb-4 tracking-wide">
                 나의 탄생, 양 인형
               </h2>
-              <div className="w-full h-px text-black mb-4"></div>
-              <p className="sheep-text text-blue leading-relaxed text-base whitespace-pre-line">
+              <div className="w-full h-px bg-white mb-4"></div>
+              <p className="sheep-text text-black leading-relaxed text-base whitespace-pre-line">
                 2004년, 나의 첫 돌을 맞이한 날 돌잔치가 열렸다. 돌잔치에 온 친척들이 내가 앞으로 잘 살길 바라는 마음을 담아 다들 한 문장씩 적어주셨다. 양 인형의 몸에는 그 문장들이 수놓아져있다. 그 양 인형은 나의 첫 번째 친구이자 선물이다.
               </p>
             </div>

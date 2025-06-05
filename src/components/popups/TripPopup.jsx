@@ -136,16 +136,16 @@ const TripPopup = ({ onClose }) => {
         </button>
 
         <div className="flex gap-6">
-          {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
-            <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
-              <img
-                src="/assets/images/trip.png"
-                alt="Trip"
-                className="w-full h-full object-cover opacity-90"
-              />
-            </div>
-          </div>
+  {/* 둥근 사각형 이미지 영역 */}
+  <div className="w-1/3 relative">
+    <div className="w-full h-48 rounded-3xl overflow-hidden border-2 border-white/40 shadow-inner">
+      <img
+        src="/assets/images/Trip.jpeg"
+        alt="Sheep"
+        className="w-full h-full object-cover opacity-90"
+      />
+    </div>
+  </div>
 
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
@@ -153,7 +153,7 @@ const TripPopup = ({ onClose }) => {
               <h2 className="trip-text text-3xl font-bold text-black mb-4 tracking-wide">
                 내 첫 해외 여행, 오키나와
               </h2>
-              <div className="w-full h-px bg-sky-200 mb-4"></div>
+              <div className="w-full h-px bg-white mb-4"></div>
               <p className="trip-text text-black leading-relaxed text-base whitespace-pre-line">
                 중학교 1학년, 처음으로 비행기를 타고 떠나 오키나와에 도착했다. 도착하자마자 탁 트이는 바다와 발 아래에는 별 모양과 거북이 모양으로 이뤄진 별모래들이 내 발을 반겨주었다. 이 키링에는 그 곳의 별모래가 같이 담겨져 있다.
               </p>

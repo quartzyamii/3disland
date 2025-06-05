@@ -544,18 +544,18 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
         scale={[0.375, 0.371, 0.427]}
       />
       <StarBottle 
-                position={[1, 0.75, 2.3]} 
-                scale={[0.31, 0.31, 0.31]} 
-                rotation={[0,0,0]}
+                position={[-2, 0.75, -1.3]} 
+                scale={[0.34, 0.34, 0.34]} 
+                rotation={[-0.1,0,0.13]}
                 castShadow
                 receiveShadow
         />
 
       <Bottle 
                 ref={bottleRef}
-                position={[1, 0.75, 2.3]} 
-                scale={[0.31, 0.31, 0.31]} 
-                rotation={[0,0,0]}
+                position={[-2, 0.75, -1.3]} 
+                scale={[0.34, 0.34, 0.34]} 
+                rotation={[-0.1,0,0.13]}
                 castShadow
                 receiveShadow
                 name="bottle"
@@ -563,9 +563,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
 
       <Sheep 
                 ref={sheepRef}
-                position={[2, 0.65, 1.4]} 
+                position={[-0, 0.64, 2.5]} //2, 0.65, 1.4
                 scale={[0.25, 0.25, 0.25]} 
-                rotation={[0.38,4.2,0.3]}
+                rotation={[0.2,3.2,0.04]}
                 castShadow
                 receiveShadow
                 name="sheep"
@@ -573,9 +573,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
 
       <KeyRing 
                 ref={keyRingRef}
-                position={[2.6, 1, 0.1]} 
-                scale={[0.4, 0.4, 0.4]} 
-                rotation={[Math.PI / 2, 0.2, -Math.PI / 2]}
+                position={[1.6, 1.03, 1.8]} //2.6, 1, 0.1
+                scale={[0.5, 0.5, 0.5]} 
+                rotation={[Math.PI / 2, 0.2, -Math.PI / 4]}
                 castShadow
                 receiveShadow
                 name="keyRing"
@@ -583,9 +583,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
 
       <TimeCapsule 
                 ref={timeCapsuleRef}
-                position={[2.2, 0.79, -0.9]} 
-                scale={[0.5, 0.5, 0.5]} 
-                rotation={[6, 0.2, 0]}
+                position={[-0.2, 0.9, -2.43]} 
+                scale={[0.6, 0.6, 0.6]} 
+                rotation={[6.2, 0.2, 1.3]}
                 castShadow
                 receiveShadow
                 name="timeCapsule"
@@ -593,9 +593,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
 
        <Trip
                 ref={tripRef}
-                position={[0.7, 0.85, -2.1]} 
+                position={[1.3, 0.84, -1.8]} //0.7, 0.85, -2.1
                 scale={[0.3, 0.3, 0.3]} 
-                rotation={[6, 1.2, 0.4]}
+                rotation={[6, 0.9, 0.4]}
                 castShadow
                 receiveShadow
                 name="trip"
@@ -603,18 +603,18 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
 
       <Sight
                 ref={sightRef}
-                position={[-1.6, 0.85, -1.1]} 
-                scale={[0.5, 0.5, 0.5]} 
-                rotation={[6, 1, 0.2]}
+                position={[2.24, 0.8, 0.15]} //-1.6, 0.85, -1.1
+                scale={[0.48, 0.48, 0.48]} 
+                rotation={[-1, -1.3, -1]}
                 castShadow
                 receiveShadow
                 name="sight"
       />
 
       <Glowstick 
-                position={[-0.4, 1.2, 2.9]} 
-                scale={[0.13, 0.13, 0.13]} 
-                rotation={[Math.PI / 1.2, Math.PI / 1.4, 2]}
+                position={[-2.6, 1.08, 1.56]} //-0.4, 1.2, 2.9
+                scale={[0.13, 0.13, 0.13]} //0.13, 0.13, 0.13
+                rotation={[Math.PI / 1.2, Math.PI / 1, 2]} //Math.PI / 1.2, Math.PI / 1.4, 2
                 castShadow
                 receiveShadow
             />
@@ -622,9 +622,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
             {/* 클릭 감지용 원형 메쉬 */}
             <mesh
                 ref={circleRef}
-                position={[-0.3, 1.12, 2.47]}
+                position={[-2.2, 1.08, 1.32]}
                 scale={[0.9, 0.9, 0.9]}
-                rotation={[Math.PI / 2.1, Math.PI / 2.2, 2.9]}
+                rotation={[Math.PI / 2.1, 3, 2.4]}
                 onClick={handleCircleClick}
                 name="glowstick"
             >

@@ -11,10 +11,11 @@ import TimeCapsulePopup from '../components/popups/TimeCapsulePopup';
 import TripPopup from '../components/popups/TripPopup';
 import SightPopup from '../components/popups/SightPopup';
 import Star from '../components/Star';
+import RotationDebugger from '../components/RotationDebugger.jsx';
 
 // import Sky from '../models/sky';
 import Island from '../models/Island';
-import Glowstick from '../models/glowstick';
+// import Glowstick from '../models/glowstick';
 import Cloud from '../models/Cloud';
 
 // 가운데 상단에 팝업 코드
@@ -138,8 +139,7 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hoveredObject, setHoveredObject] = useState(null);
-  const [showRayHelper, setShowRayHelper] = useState(false);
-  const [currentPopupObject, setCurrentPopupObject] = useState(null); // 현재 팝업 오브젝트 추가 // 레이 헬퍼 표시 여부
+  const [currentPopupObject, setCurrentPopupObject] = useState(null); // 현재 팝업 오브젝트 추가
   const [frameRate, setFrameRate] = useState(0);
   const frameCount = useRef(0);
   const lastTime = useRef(performance.now());
@@ -187,7 +187,7 @@ const Home = () => {
   const adjustIslandForScreensize = () => {
     let screenScale = null;
     let screenPosition = [0, -7, -48];
-    let rotation = [0.1, 4.7, 0 ];
+    let rotation = [0.1, 0, 0 ];
 
     if (window.innerWidth < 768) {
       screenScale = [11,11,11];
@@ -363,34 +363,13 @@ const Home = () => {
     }}>
       <Star />
 
-      {/* Debug Controls */}
-      <div className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 p-4 rounded text-white">
-        <div className="flex flex-col gap-2">
-          <label className="flex items-center gap-2">
-            <input 
-              type="checkbox" 
-              checked={showRayHelper}
-              onChange={(e) => setShowRayHelper(e.target.checked)}
-            />
-            Show Ray Helper
-          </label>
-          {hoveredObject && (
-            <div className="text-sm">
-              Hovered: <span className="text-green-400">{hoveredObject}</span>
-              <br />
-              Target Rotation: <span className="text-yellow-400">
-                {targetRotations[hoveredObject]?.toFixed(3)} rad
-              </span>
-            </div>
-          )}
-          {/* 프레임율 표시 */}
-          <div className="text-sm border-t border-gray-600 pt-2 mt-2">
-            <div className="text-cyan-400">
-              FPS: <span className="font-mono">{frameRate}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Rotation Debugger Component */}
+      <RotationDebugger 
+        IslandRef={IslandRef}
+        targetRotations={targetRotations}
+        hoveredObject={hoveredObject}
+        frameRate={frameRate}
+      />
 
       {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}
       {showPopup && currentPopupObject && (
@@ -415,7 +394,6 @@ const Home = () => {
         style={{ zIndex: 2 }}
       >
         <Suspense fallback={<Loader />}>
-          <RaycasterHelper showHelper={showRayHelper} />
           <RaycasterHandler 
             objectRefs={objectRefs}
             setIsIntersecting={setIsIntersecting}

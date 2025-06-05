@@ -101,6 +101,7 @@ const TimeCapsulePopup = ({ onClose }) => {
           </h1>
         </div>
       </animated.div>
+      
 
     <animated.div
       style={fadeIn}
@@ -123,11 +124,19 @@ const TimeCapsulePopup = ({ onClose }) => {
                 w-[640px] 
                 shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
 
-         {/*  별 장식 */}
-        <img
+         {/* 거북이 장식 */}
+        {/* <img
           src="/assets/images/Turtle2.png"
           alt="Turtle"
           className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
+        /> */}
+
+        {/* 타임캡슐 이미지 - 팝업 바깥 우측에 배치 */}
+        <img
+          src="/assets/images/TimeCapsule.png"
+          alt="TimeCapsule"
+          className="absolute top-[-200px] right-[110px] w-100 h-60 animate-rotate-mystery opacity-90 rounded-3xl "
+           style={{ transform: 'rotate(20deg)' }}
         />
 
          {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
@@ -139,21 +148,21 @@ const TimeCapsulePopup = ({ onClose }) => {
         </button>
 
         <div className="flex gap-6">
-           {/* 둥근 이미지 영역 */}
-          <div className="w-1/3 relative">
-            <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
+           {/* 둥근 사각형 이미지 영역 */}
+  {/* <div className="w-1/3 relative">
+    <div className="w-full h-48 rounded-3xl overflow-hidden border-transparent border-trasparent ">
               <img
-                src="/assets/images/Glowstick.png"
+                src="/assets/images/TimeCapsule.png"
                 alt="Glowstick"
                 className="w-full h-full object-cover opacity-90"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* 감성 텍스트 영역 */}
-          <div className="w-2/3 flex flex-col justify-between">
+          <div className="w-full flex flex-col justify-between">
             <div>
-              <h2 className="timecapsule-text text-3xl font-bold text-black mb-4 tracking-wide">
+              <h2 className="timecapsule-text text-3xl font-bold text-black mb-4 tracking-wide text-center">
                 고1의 내가 고3의 나에게
               </h2>
               <div className="w-full h-px bg-white mb-4"></div>

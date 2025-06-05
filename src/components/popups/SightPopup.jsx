@@ -9,6 +9,96 @@ const SightPopup = ({ onClose }) => {
   });
 
   return (
+    <>
+      <style>
+        {`
+          @font-face {
+            font-family: 'DalseoHealingBold';
+            src: url('/assets/fonts/DalseoHealingBold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+          }
+          @font-face {
+            font-family: 'Cafe24Meongi-B-v1.0';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-B-v1.0.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+          }
+          .sight-year {
+            font-family: 'Cafe24Meongi-B-v1.0', sans-serif;
+          }
+          .sight-text {
+            font-family: 'DalseoHealingBold', sans-serif;
+          }
+          
+          /* 부드러운 위아래 움직임 애니메이션 */
+          @keyframes float-1 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+          }
+          @keyframes float-2 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+          }
+          @keyframes float-3 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+          }
+          @keyframes float-4 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+          }
+          
+          .animate-bounce-slow-1 {
+            animation: float-1 3s ease-in-out infinite;
+          }
+          .animate-bounce-slow-2 {
+            animation: float-2 3.5s ease-in-out infinite 0.2s;
+          }
+          .animate-bounce-slow-3 {
+            animation: float-3 2.8s ease-in-out infinite 0.4s;
+          }
+          .animate-bounce-slow-4 {
+            animation: float-4 3.2s ease-in-out infinite 0.6s;
+          }
+          
+          /* 부드러운 펄스 애니메이션 */
+          @keyframes pulse-gentle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+          }
+          
+          .animate-pulse-gentle {
+            animation: pulse-gentle 4s ease-in-out infinite;
+          }
+        `}
+      </style>
+      
+      {/* 2021 년도 텍스트 */}
+      <animated.div 
+        style={fadeIn}
+        className="fixed top-48 left-1/2 transform -translate-x-1/2 z-50"
+      >
+        <div className="flex justify-center items-center gap-2">
+          <h1 className="sight-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-1"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            2
+          </h1>
+          <h1 className="sight-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-2"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            0
+          </h1>
+          <h1 className="sight-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-3"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            1
+          </h1>
+          <h1 className="sight-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-4"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            5
+          </h1>
+        </div>
+      </animated.div>
+
     <animated.div
       style={fadeIn}
       className=" fixed top-[63%] 
@@ -30,20 +120,20 @@ const SightPopup = ({ onClose }) => {
                 w-[640px] 
                 shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
 
-        {/* 반짝이는 별 장식 */}
+         {/*  별 장식 */}
         <img
-          src="/assets/images/star.png"
-          alt="star"
-          className="absolute top-4 left-4 w-6 animate-pulse opacity-80"
+          src="/assets/images/Turtle2.png"
+          alt="Turtle"
+          className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
         />
 
         <div className="flex gap-6">
-          {/* 둥근 이미지 영역 */}
+           {/* 둥근 이미지 영역 */}
           <div className="w-1/3 relative">
             <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
               <img
-                src="/assets/images/sight.png"
-                alt="Sight"
+                src="/assets/images/Glowstick.png"
+                alt="Glowstick"
                 className="w-full h-full object-cover opacity-90"
               />
             </div>
@@ -52,21 +142,18 @@ const SightPopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-sky-800 mb-4 tracking-wide">
-                마음의 풍경
+              <h2 className="sight-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+                풍경 만들기 
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="text-sky-700 leading-relaxed text-base whitespace-pre-line">
-                특별한 장소에서 본 아름다운 순간.  
-                그 감동과 평온함이 마음 깊이 새겨져  
-                언제나 그곳으로 돌아갈 수 있는  
-                영원한 기억의 창.
+              <p className="sight-text text-sky-700 leading-relaxed text-base whitespace-pre-line">
+                초등학교 6학년, 미술학원에서 보내는 마지막 겨울방학 시간에 단짝친구와 함께 방학 특강으로 풍경을 만들었다. 직접 모양을 빚고 그 위에 물감을 칠하는 과정이 정말 즐거웠다. 이 풍경에 먼지가 가득 쌓였지만 이따금 꺼내 흔들어볼 때 나는 소리는 여전히 청량감이 가득하다.
               </p>
             </div>
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end mt-3">
               <button
                 onClick={onClose}
-                className="bg-sky-500 text-white py-2 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
+                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
               >
                 닫기
               </button>
@@ -75,6 +162,7 @@ const SightPopup = ({ onClose }) => {
         </div>
       </div>
     </animated.div>
+    </>
   );
 };
 

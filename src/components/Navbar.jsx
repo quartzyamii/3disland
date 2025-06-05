@@ -3,19 +3,19 @@ import { useState, useEffect } from "react";
 
 const Navbar = () => {
     const location = useLocation();
-    const [bgColor, setBgColor] = useState('#8395ff');  // 기본 배경색 설정
+    const [bgColor, setBgColor] = useState('#9ff4ff');  // 기본 배경색 설정
 
     useEffect(() => {
         // location.pathname을 기반으로 현재 경로가 무엇인지 확인하고 배경색을 변경
         if (location.pathname === "/about" || location.pathname === "/projects") {
             setBgColor('#f5f7f9');  // 회색으로 변경
         } else {
-            setBgColor('#8395ff');  // 원래 색으로 돌아가기
+            setBgColor('#9ff4ff');  // 원래 색으로 돌아가기
         }
     }, [location]);
 
     return (
-        <header className={`header flex justify-between items-center px-4 py-2`} style={{ backgroundColor: bgColor }}>
+        <header className={`header flex justify-between items-center px-4 py-2 fixed top-0 left-0 right-0 z-50`} style={{ backgroundColor: bgColor }}>
             <NavLink to="/" className="w-10 h-10 rounded-lg bg-white items-center justify-center flex font-bold shadow-md">
                 <p className="blue-gradient_text">
                     KIM

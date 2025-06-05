@@ -9,6 +9,96 @@ const SheepPopup = ({ onClose }) => {
   });
 
   return (
+    <>
+      <style>
+        {`
+          @font-face {
+            font-family: 'DalseoHealingBold';
+            src: url('/assets/fonts/DalseoHealingBold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+          }
+          @font-face {
+            font-family: 'Cafe24Meongi-B-v1.0';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-B-v1.0.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+          }
+          .sheep-year {
+            font-family: 'Cafe24Meongi-B-v1.0', sans-serif;
+          }
+          .sheep-text {
+            font-family: 'DalseoHealingBold', sans-serif;
+          }
+          
+          /* 부드러운 위아래 움직임 애니메이션 */
+          @keyframes float-1 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+          }
+          @keyframes float-2 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+          }
+          @keyframes float-3 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+          }
+          @keyframes float-4 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+          }
+          
+          .animate-bounce-slow-1 {
+            animation: float-1 3s ease-in-out infinite;
+          }
+          .animate-bounce-slow-2 {
+            animation: float-2 3.5s ease-in-out infinite 0.2s;
+          }
+          .animate-bounce-slow-3 {
+            animation: float-3 2.8s ease-in-out infinite 0.4s;
+          }
+          .animate-bounce-slow-4 {
+            animation: float-4 3.2s ease-in-out infinite 0.6s;
+          }
+          
+          /* 양 통통 튀는 애니메이션 */
+          @keyframes bounce-gentle {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+          }
+          
+          .animate-bounce-gentle {
+            animation: bounce-gentle 3s ease-in-out infinite;
+          }
+        `}
+      </style>
+      
+      {/* 2003 년도 텍스트 */}
+      <animated.div 
+        style={fadeIn}
+        className="fixed top-48 left-1/2 transform -translate-x-1/2 z-50"
+      >
+        <div className="flex justify-center items-center gap-2">
+          <h1 className="sheep-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-1"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            2
+          </h1>
+          <h1 className="sheep-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-2"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            0
+          </h1>
+          <h1 className="sheep-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-3"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            0
+          </h1>
+          <h1 className="sheep-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-4"
+              style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
+            4
+          </h1>
+        </div>
+      </animated.div>
+
     <animated.div
       style={fadeIn}
       className=" fixed top-[63%] 
@@ -30,20 +120,20 @@ const SheepPopup = ({ onClose }) => {
                 w-[640px] 
                 shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
 
-        {/* 반짝이는 별 장식 */}
+         {/*  별 장식 */}
         <img
-          src="/assets/images/star.png"
-          alt="star"
-          className="absolute top-4 left-4 w-6 animate-pulse opacity-80"
+          src="/assets/images/Turtle2.png"
+          alt="Turtle"
+          className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
         />
 
         <div className="flex gap-6">
-          {/* 둥근 이미지 영역 */}
+           {/* 둥근 이미지 영역 */}
           <div className="w-1/3 relative">
             <div className="w-full h-48 rounded-full overflow-hidden border-2 border-white/40 shadow-inner">
               <img
-                src="/assets/images/sheep.png"
-                alt="Sheep"
+                src="/assets/images/Glowstick.png"
+                alt="Glowstick"
                 className="w-full h-full object-cover opacity-90"
               />
             </div>
@@ -52,21 +142,18 @@ const SheepPopup = ({ onClose }) => {
           {/* 감성 텍스트 영역 */}
           <div className="w-2/3 flex flex-col justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-sky-800 mb-4 tracking-wide">
-                포근한 양털 친구
+              <h2 className="sheep-text text-3xl font-bold text-sky-800 mb-4 tracking-wide">
+                나의 탄생, 양 인형
               </h2>
               <div className="w-full h-px bg-sky-200 mb-4"></div>
-              <p className="text-sky-700 leading-relaxed text-base whitespace-pre-line">
-                따뜻한 마음을 담은 양털 인형.  
-                부드러운 솜털처럼 편안함을 전해주는  
-                언제나 곁에 있어줄  
-                소중한 친구.
+              <p className="sheep-text text-blue leading-relaxed text-base whitespace-pre-line">
+                2004년, 나의 첫 돌을 맞이한 날 돌잔치가 열렸다. 돌잔치에 온 친척들이 내가 앞으로 잘 살길 바라는 마음을 담아 다들 한 문장씩 적어주셨다. 양 인형의 몸에는 그 문장들이 수놓아져있다. 그 양 인형은 나의 첫 번째 친구이자 선물이다.
               </p>
             </div>
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end mt-3">
               <button
                 onClick={onClose}
-                className="bg-sky-500 text-white py-2 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
+                className="bg-sky-500 text-white py-1.5 px-6 rounded-full hover:bg-sky-600 transition-all shadow"
               >
                 닫기
               </button>
@@ -75,6 +162,7 @@ const SheepPopup = ({ onClose }) => {
         </div>
       </div>
     </animated.div>
+    </>
   );
 };
 

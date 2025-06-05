@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 const NUM_STARS = 150;
 const TRAIL_LENGTH = 250;
 
-const STAR_COLOR = '#b0baff';
+const STAR_COLOR = '#cae9fa';
 
 const Star = () => {
   const canvasRef = useRef(null);

@@ -1,6 +1,5 @@
 import React, { useState, Suspense, useRef, useEffect } from 'react';
 import {Canvas, useThree} from '@react-three/fiber';
-import {Stats} from '@react-three/drei';
 import Loader from '../components/Loader';
 import * as THREE from 'three';
 import Popup from '../components/Popup';
@@ -11,7 +10,6 @@ import TimeCapsulePopup from '../components/popups/TimeCapsulePopup';
 import TripPopup from '../components/popups/TripPopup';
 import SightPopup from '../components/popups/SightPopup';
 import Star from '../components/Star';
-import RotationDebugger from '../components/RotationDebugger.jsx';
 
 // import Sky from '../models/sky';
 import Island from '../models/Island';
@@ -89,60 +87,12 @@ const RaycasterHandler = ({ objectRefs, setIsIntersecting, setHoveredObject }) =
   return null;
 };
 
-// RaycasterHelper for visual debugging
-const RaycasterHelper = ({ showHelper = false }) => {
-  const { camera, scene } = useThree();
-  const raycaster = useRef(new THREE.Raycaster());
-  const lineRef = useRef();
-  
-  useEffect(() => {
-    if (!showHelper) return;
-    
-    const handleMouseMove = (event) => {
-      const canvas = document.getElementById('three-canvas');
-      if (!canvas) return;
-      
-      const rect = canvas.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-      
-      raycaster.current.setFromCamera({ x, y }, camera);
-      
-      if (lineRef.current) {
-        const points = [
-          raycaster.current.ray.origin,
-          raycaster.current.ray.origin.clone().add(raycaster.current.ray.direction.clone().multiplyScalar(50))
-        ];
-        lineRef.current.geometry.setFromPoints(points);
-      }
-    };
-    
-    const canvas = document.getElementById('three-canvas');
-    if (canvas) {
-      canvas.addEventListener('mousemove', handleMouseMove);
-      return () => canvas.removeEventListener('mousemove', handleMouseMove);
-    }
-  }, [camera, showHelper]);
-  
-  if (!showHelper) return null;
-  
-  return (
-    <line ref={lineRef}>
-      <bufferGeometry />
-      <lineBasicMaterial color="red" />
-    </line>
-  );
-};
-
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hoveredObject, setHoveredObject] = useState(null);
   const [currentPopupObject, setCurrentPopupObject] = useState(null); // 현재 팝업 오브젝트 추가
-  const [frameRate, setFrameRate] = useState(0);
-  const frameCount = useRef(0);
-  const lastTime = useRef(performance.now());
   
   // 6개 오브젝트 각각의 ref
   const bottleRef = useRef();
@@ -328,48 +278,16 @@ const Home = () => {
     };
   }, []);
 
-  // 프레임율 계산
-  useEffect(() => {
-    const updateFrameRate = () => {
-      frameCount.current++;
-      const now = performance.now();
-      const delta = now - lastTime.current;
-      
-      if (delta >= 1000) { // 1초마다 업데이트
-        const fps = Math.round((frameCount.current * 1000) / delta);
-        setFrameRate(fps);
-        frameCount.current = 0;
-        lastTime.current = now;
-      }
-      
-      requestAnimationFrame(updateFrameRate);
-    };
-    
-    const animationId = requestAnimationFrame(updateFrameRate);
-    
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
-
   return (
     <section className="w-full h-screen relative"
     style={{
-      backgroundImage: 'url("/assets/images/SKY.png")',
+      backgroundImage: 'url("/assets/images/SKY2.png")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       position: 'relative',
       zIndex: 1
     }}>
       <Star />
-
-      {/* Rotation Debugger Component */}
-      <RotationDebugger 
-        IslandRef={IslandRef}
-        targetRotations={targetRotations}
-        hoveredObject={hoveredObject}
-        frameRate={frameRate}
-      />
 
       {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}
       {showPopup && currentPopupObject && (
@@ -435,7 +353,7 @@ const Home = () => {
             sightRef={sightRef}
           />
           <Cloud 
-          position={[0, -10, -48]} 
+          position={[0, -11, -48]} 
           scale={[12,12,12]}
           // rotation={[0, Math.PI, 0]}
           />

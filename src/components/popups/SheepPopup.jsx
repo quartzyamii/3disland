@@ -24,11 +24,20 @@ const SheepPopup = ({ onClose }) => {
             font-weight: normal;
             font-style: normal;
           }
+          @font-face {
+            font-family: 'Chilgok_Cye';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/Chilgok_Cye.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+          }
           .sheep-year {
             font-family: 'Cafe24Meongi-B-v1.0', sans-serif;
           }
           .sheep-text {
             font-family: 'DalseoHealingBold', sans-serif;
+          }
+          .sheep-wish {
+            font-family: 'Chilgok_Cye', sans-serif;
           }
           
           /* 부드러운 위아래 움직임 애니메이션 */
@@ -97,6 +106,47 @@ const SheepPopup = ({ onClose }) => {
             4
           </h1>
         </div>
+      </animated.div>
+
+      {/* 소원 텍스트 */}
+      <animated.div 
+        style={fadeIn}
+        className="fixed top-[300px] left-[35%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+      >
+        <p className="sheep-wish text-2xl text-white text-center opacity-90"
+           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+          똥강아지<br /> 건강해라<br /> 모든면에서 <br /> -큰이모가-
+        </p>
+      </animated.div>
+
+      <animated.div 
+        style={fadeIn}
+        className="fixed top-[475px] left-[36%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+      >
+        <p className="sheep-wish text-2xl text-white text-center opacity-90"
+           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+          민진아<br /> 예쁘게<br /> 건강하게 <br /> 자라렴 <br /> -몽실 이모가-
+        </p>
+      </animated.div>
+
+      <animated.div 
+        style={fadeIn}
+        className="fixed top-[300px] left-[57%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+      >
+        <p className="sheep-wish text-2xl text-white text-center opacity-90"
+           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+          이쁜 민진아. <br /> 더 이쁘고 참하고 <br /> 건강한 공주님 되세요 <br /> 이천사년 오월이십이일 <br /> 외할머니
+        </p>
+      </animated.div>
+
+      <animated.div 
+        style={fadeIn}
+        className="fixed top-[530px] left-[55%] transform -translate-x-1/2 z-50 animate-bounce-slow-1"
+      >
+        <p className="sheep-wish text-2xl text-white text-center opacity-90"
+           style={{ filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8))' }}>
+          언능 언능 크거라 <br /> 많이 놀아줄게 <br /> -외삼촌, 외숙모가-
+        </p>
       </animated.div>
 
     <animated.div

@@ -633,17 +633,18 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
       />
 
       <Glowstick 
-                position={[-2.5, 1.08, 1.5]} //-0.4, 1.2, 2.9
+                position={[-2.5, 1.13, 1.5]} //-0.4, 1.2, 2.9
                 scale={[0.14, 0.14, 0.14]} //0.13, 0.13, 0.13
                 rotation={[Math.PI / 1.2, Math.PI / 1, 2]} //Math.PI / 1.2, Math.PI / 1.4, 2
                 castShadow
                 receiveShadow
+                
             />
 
             {/* 클릭 감지용 원형 메쉬 */}
             <mesh
                 ref={circleRef}
-                position={[-2.1, 1.09, 1.25]}
+                position={[-2.1, 1.13, 1.25]}
                 scale={[1, 1, 1]}
                 rotation={[Math.PI / 2.1, 3, 2.4]}
                 onClick={handleCircleClick}

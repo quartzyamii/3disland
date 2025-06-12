@@ -16,6 +16,37 @@
 }
 
 @layer utilities {
+  /* ANIMATIONS */
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .animate-fadeOut {
+    animation: fadeOut 0.8s ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.05);
+    }
+  }
+
   /* TYPOGRAPHY */
   .blue-gradient_text {
   @apply bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent;

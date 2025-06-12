@@ -19,6 +19,20 @@ module.exports = {
       },
     },
     extend: {
+      fontSize: {
+        '12xl' : ['10rem', { lineHeight: '1' }],
+        '11xl' : ['8rem', { lineHeight: '1' }],
+        '10xl' : ['6rem', { lineHeight: '1' }],
+        '9xl' : ['5rem', { lineHeight: '1' }],
+        '8xl' : ['4rem', { lineHeight: '1' }],
+        '7xl' : ['3.5rem', { lineHeight: '1' }],
+        '6xl' : ['3rem', { lineHeight: '1' }],
+        '5xl' : ['2.5rem', { lineHeight: '1' }],
+        '4xl' : ['2rem', { lineHeight: '1' }],
+        '3xl' : ['1.75rem', { lineHeight: '1.2' }],
+        '2xl' : ['1.5rem', { lineHeight: '1.2' }], 
+      },
+
       colors: {
         'primary-500': '#877EFF',
         'primary-600': '#5D5FEF',
@@ -45,6 +59,9 @@ module.exports = {
         inter: ['Inter', 'sans-serif'],
 
       },
+
+      
+
       keyframes: {
         'accordion-down': {
           from: { height: 0 },

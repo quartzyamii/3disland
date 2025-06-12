@@ -2,7 +2,7 @@ import React, { useState, Suspense, useRef, useEffect } from 'react';
 import {Canvas, useThree} from '@react-three/fiber';
 import Loader from '../components/Loader';
 import * as THREE from 'three';
-import Popup from '../components/Popup';
+import Popup from '../components/popups/Popup';
 import BottlePopup from '../components/popups/BottlePopup';
 import SheepPopup from '../components/popups/SheepPopup';
 import KeyRingPopup from '../components/popups/KeyRingPopup';

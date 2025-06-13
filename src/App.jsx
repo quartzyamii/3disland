@@ -102,11 +102,44 @@ const App = () => {
               src="/assets/images/1PageTutorial.png" 
               alt="창든 사울과의 이별, 추억의 아카이빙"
               style={{ transform: 'scale(0.7)' }} // 60% 크기
+              
             />
           </div>
 
+     
           {/* Memory Island 텍스트 */}
           <div 
+            className="absolute left-1/2 transform -translate-x-1/2 z-20"
+            style={{ top: '-70px', width: '80%', height: 'auto', textAlign: 'center' }} // top을 음수로 설정하여 더 위로 이동
+          >
+            <img 
+              src="/assets/images/MemoryIsland001.png" 
+              alt="memoryislandTitle"
+              className="animate-float"
+              style={{ 
+                transform: 'translateX(-50%) scale(1)', // 가로 중앙 유지 및 크기 조정
+              }}
+            />
+          </div>
+
+          <style>
+            {`
+              @keyframes float {
+                0%, 100% {
+                  transform: translateY(0); /* 원래 위치 */
+                }
+                50% {
+                  transform: translateY(-10px); /* 위로 이동 */
+                }
+              }
+
+              .animate-float {
+                animation: float 3s ease-in-out infinite; /* 부드러운 위아래 움직임 */
+              }
+            `}
+          </style>
+
+          {/* <div 
             className="absolute left-1/2 transform -translate-x-1/2 z-10 flex justify-center items-center gap-4"
             style={{ top: '20%' }} // 화면의 42% 위치로 조정
           >
@@ -118,7 +151,7 @@ const App = () => {
                 style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.9))' }}>
               Island
             </h1>
-          </div>
+          </div> */}
           
           {/* 하단 버튼 영역 */}
           <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10">

@@ -13,7 +13,6 @@ const App = () => {
   // 상태 관리
   const [showLandingOverlay, setShowLandingOverlay] = useState(true);
   const [isLandingFadingOut, setIsLandingFadingOut] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState(0);
   const [isAssetsLoaded, setIsAssetsLoaded] = useState(false);
 
   // 컴포넌트 마운트 시 에셋 로드
@@ -31,7 +30,6 @@ const App = () => {
         const img = new Image();
         const handleComplete = () => {
           loadedCount++;
-          setLoadingProgress((loadedCount / totalAssets) * 100);
           resolve();
         };
         
@@ -146,6 +144,17 @@ const App = () => {
           transform: scale(0.8) translateY(-30px);
           filter: drop-shadow(0 15px 35px rgba(0,0,0,0.4));
         }
+
+        @keyframes slide-up {
+          0% {
+            transform: translateY(100px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
       `}
     </style>
   );
@@ -176,29 +185,14 @@ const App = () => {
 
   // 시작 버튼 컴포넌트
   const StartButton = () => (
-    <img 
-      src="/assets/images/START001.png"
-      alt="START"
-      onClick={handleStartClick}
-      className="start-button"
-      draggable={false}
-    />
-  );
-
-  // 로딩 진행률 컴포넌트
-  const LoadingProgress = () => (
-    <div className="w-full max-w-md mx-auto text-center">
-      <div className="mb-6">
-        <div className="w-full bg-white bg-opacity-30 rounded-full h-4 backdrop-blur-sm border border-white border-opacity-20">
-          <div 
-            className="bg-gradient-to-r from-green-400 to-blue-400 h-4 rounded-full transition-all duration-500 shadow-lg"
-            style={{ width: `${loadingProgress}%` }}
-          />
-        </div>
-      </div>
-      <p className="text-lg text-white drop-shadow-lg font-medium">
-        에셋 로딩 중... {Math.round(loadingProgress)}%
-      </p>
+   <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10 animate-slide-up">
+      <img 
+        src="/assets/images/START001.png"
+        alt="START"
+        onClick={handleStartClick}
+        className="start-button"
+        draggable={false}
+      />
     </div>
   );
 
@@ -220,7 +214,7 @@ const App = () => {
       
       
       <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 z-10 w-fit">
-        {!isAssetsLoaded ? <LoadingProgress /> : <StartButton />}
+        <StartButton />
       </div>
     </div>
   );

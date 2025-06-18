@@ -90,16 +90,12 @@ const App = () => {
         @keyframes slideUp {
           0% {
             opacity: 0;
-            transform: translateX(-50%) translateY(50px);
+            transform: translateX(-50%) translateY(30px);
           }
           100% {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
           }
-        }
-        
-        .animate-slide-up {
-          animation: slideUp 1s ease-out;
         }
         
         /* 타이틀 이미지 전용 스타일 */
@@ -112,22 +108,20 @@ const App = () => {
           width: 80%;
           text-align: center;
           --scale: 0.8;
+          opacity: 0;
         }
         
         /* 튜토리얼 이미지 전용 스타일 */
         .tutorial-image {
-         position: absolute;
+          position: absolute;
           left: 50%;
           transform: translateX(-50%);
           z-index: 20;
-          top: 430px;
-          display: inline-block; /* 이미지 크기에 맞게 div 크기 조정 */
+          top: 300px;
+          width: 80%;
           text-align: center;
-          width: auto; /* 불필요한 width 제거 */
-          height: auto; /* 불필요한 height 제거 */
-          padding: 0; /* 불필요한 padding 제거 */
-          margin: 0; /* 불필요한 margin 제거 */
-          --scale: 0.8;
+          --scale: 0.5;
+          opacity: 0;
         }
         
         /* 시작 버튼 전용 스타일 */
@@ -144,16 +138,28 @@ const App = () => {
           transform: scale(0.8) translateY(-30px);
           filter: drop-shadow(0 15px 35px rgba(0,0,0,0.4));
         }
-
-        @keyframes slide-up {
-          0% {
-            transform: translateY(100px);
-            opacity: 0;
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
+        
+        /* 시작 버튼 컨테이너 */
+        .start-button-container {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 10;
+          opacity: 0;
+        }
+        
+        /* 애니메이션 클래스 */
+        .animate-title {
+          animation: slideUp 1s ease-out 0s forwards; /* 0초 딜레이로 변경 (즉시 시작) */
+        }
+        
+        .animate-tutorial {
+          animation: slideUp 1s ease-out 1.5s forwards;
+        }
+        
+        .animate-button {
+          animation: slideUp 1s ease-out 3s forwards;
         }
       `}
     </style>
@@ -163,7 +169,7 @@ const App = () => {
 
   // 타이틀 이미지 컴포넌트
   const TitleImage = () => (
-    <div className="title-image animate-slide-up">
+    <div className="title-image animate-title">
       <img 
         src="/assets/images/MemoryIsland001.png" 
         alt="memoryislandTitle"
@@ -174,7 +180,7 @@ const App = () => {
 
   // 튜토리얼 이미지 컴포넌트
   const TutorialImage = () => (
-    <div className="tutorial-image animate-slide-up">
+    <div className="tutorial-image animate-tutorial">
       <img 
         src="/assets/images/Modal.png" 
         alt="정든 사울과의 이별, 추억의 아카이빙"
@@ -185,7 +191,7 @@ const App = () => {
 
   // 시작 버튼 컴포넌트
   const StartButton = () => (
-   <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10 animate-slide-up">
+    <div className="start-button-container animate-button">
       <img 
         src="/assets/images/START001.png"
         alt="START"
@@ -212,10 +218,7 @@ const App = () => {
       <TitleImage />
       <TutorialImage /> 
       
-      
-      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 z-10 w-fit">
-        <StartButton />
-      </div>
+      {isAssetsLoaded && <StartButton />}
     </div>
   );
   // 메인 렌더링

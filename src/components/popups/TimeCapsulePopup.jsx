@@ -24,22 +24,13 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
       <style>
         {`
           @font-face {
-            font-family: 'DalseoHealingBold';
-            src: url('/assets/fonts/DalseoHealingBold.otf') format('opentype');
-            font-weight: bold;
-            font-style: normal;
-          }
-          @font-face {
             font-family: 'Cafe24Meongi-B-v1.0';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-B-v1.0.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
           }
           .timecapsule-year {
-            font-family: 'Cafe24Meongi-B-v1.0', sans-serif;
-          }
-          .timecapsule-text {
-            font-family: 'DalseoHealingBold', sans-serif;
+            font-family: 'Cafe24Meongi-B-v1.0', sans-serif !important;
           }
           
           /* 부드러운 위아래 움직임 애니메이션 */
@@ -72,18 +63,15 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
           .animate-bounce-slow-4 {
             animation: float-4 3.2s ease-in-out infinite 0.6s;
           }
-          
-          /* 시간 캡슐 신비로운 회전 애니메이션 */}
-          @keyframes rotate-mystery {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(90deg) scale(1.1); }
-            50% { transform: rotate(180deg) scale(1); }
-            75% { transform: rotate(270deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
+
+          /* 이미지 애니메이션 */
+          @keyframes float-image {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
           }
           
-          .animate-rotate-mystery {
-            animation: rotate-mystery 6s ease-in-out infinite;
+          .animate-float-image {
+            animation: float-image 5s ease-in-out infinite;
           }
         `}
       </style>
@@ -94,19 +82,19 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
         className="fixed top-48 left-1/2 transform -translate-x-1/2 z-50"
       >
         <div className="flex justify-center items-center gap-2">
-          <h1 className="timecapsule-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-1"
+          <h1 className="timecapsule-year text-10xl font-bold text-white opacity-100 animate-bounce-slow-1"
               style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
             2
           </h1>
-          <h1 className="timecapsule-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-2"
+          <h1 className="timecapsule-year text-10xl font-bold text-white opacity-100 animate-bounce-slow-2"
               style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
             0
           </h1>
-          <h1 className="timecapsule-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-3"
+          <h1 className="timecapsule-year text-10xl font-bold text-white opacity-100 animate-bounce-slow-3"
               style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
             1
           </h1>
-          <h1 className="timecapsule-year text-9xl font-bold text-white opacity-100 animate-bounce-slow-4"
+          <h1 className="timecapsule-year text-10xl font-bold text-white opacity-100 animate-bounce-slow-4"
               style={{ filter: 'drop-shadow(4px 4px 8px rgba(56, 189, 248, 0.6))' }}>
             9
           </h1>
@@ -114,79 +102,36 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
       </animated.div>
       
 
-    <animated.div
-      style={slideUp}
-      className=" fixed top-[63%] 
-                  left-1/2 
-                  transform 
-                  -translate-x-1/2 
-                  z-50 
-                  mb-4
-                  flex 
-                  items-center 
-                  justify-center"
-    >
-      <div className="relative 
-                bg-white/20 
-                backdrop-blur-md
-                rounded-3xl 
-                border-2 border-white/50 
-                p-8 
-                w-[640px] 
-                shadow-[0_0_40px_20px_rgba(255,255,255,0.2)]">
-
-         {/* 거북이 장식 */}
-        {/* <img
-          src="/assets/images/Turtle2.png"
-          alt="Turtle"
-          className="absolute top-[-100px] left-[-100px] w-36 animate-wiggle opacity-100"
-        /> */}
-
-        {/* 타임캡슐 이미지 - 팝업 바깥 우측에 배치 */}
-        <img
-          src="/assets/images/TimeCapsule.png"
-          alt="TimeCapsule"
-          className="absolute top-[-200px] right-[110px] w-100 h-60 animate-rotate-mystery opacity-90 rounded-3xl "
-           style={{ transform: 'rotate(20deg)' }}
-        />
-
-         {/* 닫기 버튼 - 우측 상단 꼭짓점 */}
-        <button
-          onClick={onClose}
-          className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-white text-black py-2 px-3 rounded-full hover:bg-black hover:text-white transition-all shadow z-10"
-        >
-          X
-        </button>
-
-        <div className="flex gap-6">
-           {/* 둥근 사각형 이미지 영역 */}
-  {/* <div className="w-1/3 relative">
-    <div className="w-full h-48 rounded-3xl overflow-hidden border-transparent border-trasparent ">
+    {/* 이미지 추가 */}
+          {/* TimeCapule 팝업 */}
+          <animated.div 
+            style={slideUp}
+            className="fixed top-[60%] inset-x-0 z-50 flex justify-center"
+          >
+            <div className="relative">
               <img
-                src="/assets/images/TimeCapsule.png"
-                alt="Glowstick"
-                className="w-full h-full object-cover opacity-90"
+                src="/assets/images/TimeCapsulePopup.png"
+                alt="TimeCapsulePopup"
+                className="rounded-xl w-[630px] h-auto animate-float-image"
               />
+              
+              {/* 닫기 버튼 - 이미지 내부에 위치 */}
+              <button
+                onClick={onClose}
+                className="absolute top-9 right-12 hover:bg-opacity-40 transition-all duration-300 animate-float-image "
+              >
+                <img 
+                  src="/assets/images/CloseButton001.png" 
+                  alt="Close" 
+                  className="w-12 h-12 object-contain"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E";
+                  }}
+                />
+              </button>
             </div>
-          </div> */}
-
-          {/* 감성 텍스트 영역 */}
-          <div className="w-full flex flex-col justify-between">
-            <div>
-              <h2 className="timecapsule-text text-3xl font-bold text-black mb-4 tracking-wide text-center">
-                고1의 내가 고3의 나에게
-              </h2>
-              <div className="w-full h-px bg-white mb-4"></div>
-              <p className="timecapsule-text text-black leading-relaxed text-base whitespace-pre-line">
-                고등학교 1학년 때, 고3의 나에게 보내는 편지를 담아 학교에서 만든 타임캡슐이다. 이 타임 캡슐을 펼쳐보면 "할수있다"라는 말만이 종이를 빼곡히 채우고 있다. 이 때의 나는 지금의 나를 간절히 믿고 싶었던 마음이 고스란히 느껴진다. 
-              </p>
-            </div>
-            <div className="flex justify-end mt-3">
-            </div>
-          </div>
-        </div>
-      </div>
-    </animated.div>
+          </animated.div>
     </>
   );
 };

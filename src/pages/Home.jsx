@@ -326,7 +326,14 @@ const Home = () => {
   return (
     <section className="w-full h-screen relative"
     style={{
-      backgroundImage: `url("/assets/images/${currentPopupObject === 'trip' ? 'TripBackground.png' : 'SKY2.png'}")`,
+      backgroundImage: `url("/assets/images/${
+        currentPopupObject === 'trip' ? 'TripBackground.png' : 
+        currentPopupObject === 'sheep' ? 'SheepBackground.png' : 
+        currentPopupObject === 'glowstick' ? 'GlowstickBackground.png' :
+        currentPopupObject === 'keyRing' ? 'KeyRingBackground.png' :
+        currentPopupObject === 'bottle' ? 'BottleBackground.png' :
+        'SKY2.png'
+      }")`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       position: 'relative',

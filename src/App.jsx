@@ -157,11 +157,11 @@ const App = () => {
         }
         
         .animate-tutorial {
-          animation: slideUp 1s ease-out 1.5s forwards;
+          animation: slideUp 1s ease-out 1s forwards;
         }
         
         .animate-button {
-          animation: slideUp 1s ease-out 3s forwards;
+          animation: slideUp 1s ease-out 2s forwards;
         }
       `}
     </style>

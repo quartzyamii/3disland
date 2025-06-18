@@ -3,7 +3,8 @@ import React, { useRef, useEffect } from 'react';
 const NUM_STARS = 150;
 const TRAIL_LENGTH = 250;
 
-const STAR_COLOR = '#cae9fa';
+// 별 색상 지정 (투명도는 ctx.globalAlpha로 조절)
+const STAR_COLOR = '#f9fdff';
 
 const Star = () => {
   const canvasRef = useRef(null);
@@ -65,7 +66,7 @@ const Star = () => {
           ctx.moveTo(star.trail[0].x, star.trail[0].y);
           for (let i = 1; i < star.trail.length; i++) {
             const point = star.trail[i];
-            const alpha = i / star.trail.length;
+            const alpha = (i / star.trail.length) * 0.2; // 투명도 20%
             ctx.strokeStyle = STAR_COLOR;
             ctx.globalAlpha = alpha;
             ctx.lineTo(point.x, point.y);
@@ -79,8 +80,9 @@ const Star = () => {
         ctx.beginPath();
         ctx.arc(x, y, 2, 0, Math.PI * 2);
         ctx.fillStyle = STAR_COLOR;
-        ctx.globalAlpha = 1;
+        ctx.globalAlpha = 0.2; // 투명도 20%
         ctx.fill();
+        ctx.globalAlpha = 1; // 다른 그림 요소에 영향을 주지 않도록 초기화
       });
 
       animationId = requestAnimationFrame(draw);

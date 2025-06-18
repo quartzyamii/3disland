@@ -90,9 +90,10 @@ const RaycasterHandler = ({ objectRefs, setIsIntersecting, setHoveredObject }) =
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [currentPopupObject, setCurrentPopupObject] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);  // 애니메이션 종료 상태 추가
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hoveredObject, setHoveredObject] = useState(null);
-  const [currentPopupObject, setCurrentPopupObject] = useState(null); // 현재 팝업 오브젝트 추가
   
   // 6개 오브젝트 각각의 ref
   const bottleRef = useRef();
@@ -299,12 +300,18 @@ const Home = () => {
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false);
-    setCurrentPopupObject(null); // 팝업 오브젝트 초기화
-    if (animationFrame.current) {
-      cancelAnimationFrame(animationFrame.current);
-    }
-    // 회전 초기화 제거 - 현재 위치 그대로 유지
+    // exit 애니메이션을 위해 isClosing 상태를 true로 설정
+    setIsClosing(true);
+    
+    // 애니메이션 시간 후에 팝업을 실제로 닫음
+    setTimeout(() => {
+      setShowPopup(false);
+      setCurrentPopupObject(null); // 팝업 오브젝트 초기화
+      setIsClosing(false); // 애니메이션 종료 상태 초기화
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+    }, 600); // 애니메이션 지속 시간과 맞춤
   };
 
   useEffect(() => {
@@ -330,13 +337,13 @@ const Home = () => {
       {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}
       {showPopup && currentPopupObject && (
         <>
-          {currentPopupObject === 'bottle' && <BottlePopup onClose={handleClosePopup} />}
-          {currentPopupObject === 'sheep' && <SheepPopup onClose={handleClosePopup} />}
-          {currentPopupObject === 'keyRing' && <KeyRingPopup onClose={handleClosePopup} />}
-          {currentPopupObject === 'timeCapsule' && <TimeCapsulePopup onClose={handleClosePopup} />}
-          {currentPopupObject === 'trip' && <TripPopup onClose={handleClosePopup} />}
-          {currentPopupObject === 'sight' && <SightPopup onClose={handleClosePopup} />}
-          {currentPopupObject === 'glowstick' && <Popup onClose={handleClosePopup} />}
+          {currentPopupObject === 'bottle' && <BottlePopup onClose={handleClosePopup} isClosing={isClosing} />}
+          {currentPopupObject === 'sheep' && <SheepPopup onClose={handleClosePopup} isClosing={isClosing} />}
+          {currentPopupObject === 'keyRing' && <KeyRingPopup onClose={handleClosePopup} isClosing={isClosing} />}
+          {currentPopupObject === 'timeCapsule' && <TimeCapsulePopup onClose={handleClosePopup} isClosing={isClosing} />}
+          {currentPopupObject === 'trip' && <TripPopup onClose={handleClosePopup} isClosing={isClosing} />}
+          {currentPopupObject === 'sight' && <SightPopup onClose={handleClosePopup} isClosing={isClosing} />}
+          {currentPopupObject === 'glowstick' && <Popup onClose={handleClosePopup} isClosing={isClosing} />}
         </>
       )}
 

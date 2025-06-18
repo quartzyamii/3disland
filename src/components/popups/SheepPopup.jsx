@@ -1,10 +1,21 @@
 import React from 'react';
 import { useSpring, animated } from '@react-spring/web';
 
-const SheepPopup = ({ onClose }) => {
+const SheepPopup = ({ onClose, isClosing = false }) => {
   const fadeIn = useSpring({
     from: { opacity: 0 },
-    to: { opacity: 1 },
+    to: { opacity: isClosing ? 0 : 1 },
+    config: { duration: 600 },
+  });
+
+  // 슬라이드 애니메이션 추가
+  const slideUp = useSpring({
+    from: { opacity: 0, transform: 'translateY(50px)' },
+    to: { 
+      opacity: isClosing ? 0 : 1, 
+      transform: isClosing ? 'translateY(50px)' : 'translateY(0px)' 
+    },
+    delay: isClosing ? 0 : 300,
     config: { duration: 600 },
   });
 
@@ -152,7 +163,7 @@ const SheepPopup = ({ onClose }) => {
 
 
     <animated.div
-      style={fadeIn}
+      style={slideUp}
       className=" fixed top-[63%] 
                   left-1/2 
                   transform 

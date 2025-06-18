@@ -157,7 +157,7 @@ const SightPopup = ({ onClose }) => {
       <img
         src="/assets/images/Sight2.png"
         alt="Sheep"
-        lassName="w-[85%] h-[85%] object-cover opacity-90"
+        className="w-[85%] h-[85%] object-cover opacity-90"
       />
     </div>
   </div>

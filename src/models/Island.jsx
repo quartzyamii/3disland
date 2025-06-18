@@ -74,9 +74,9 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
             rotationSpeed.current = delta * 0.01 * Math.PI;
 
             // 회전값 출력 (라디안)
-            console.log('Y Rotation (radians):', ref.current.rotation.y);
+            // console.log('Y Rotation (radians):', ref.current.rotation.y);
             // 회전값 출력 (도)
-            console.log('Y Rotation (degrees):', THREE.MathUtils.radToDeg(ref.current.rotation.y));
+            // console.log('Y Rotation (degrees):', THREE.MathUtils.radToDeg(ref.current.rotation.y));
         }
     }
 

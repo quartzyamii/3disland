@@ -222,17 +222,17 @@ const Home = () => {
   const handleCanvasClick = (e) => {
     if (isRotating || showPopup) return;
     
-    console.log('Canvas clicked!', e.target);
+    // console.log('Canvas clicked!', e.target);
     
     // 간단한 방법: 현재 호버된 오브젝트가 있는지 확인
     if (isIntersecting && hoveredObject && IslandRef.current) {
-      console.log('Clicked object:', hoveredObject);
+      // console.log('Clicked object:', hoveredObject);
       
       // 목표 회전 각도 결정
       const targetRotation = targetRotations[hoveredObject];
       
       if (targetRotation === undefined) {
-        console.log('No target rotation for:', hoveredObject);
+        // console.log('No target rotation for:', hoveredObject);
         return;
       }
       
@@ -241,11 +241,11 @@ const Home = () => {
       // getOptimizedRotation 함수를 사용하여 최적화된 회전 계산
       const optimizedTarget = getOptimizedRotation(current, targetRotation);
       
-      console.log('Current rotation:', current, 'Target:', optimizedTarget);
+      // console.log('Current rotation:', current, 'Target:', optimizedTarget);
       
       // 현재 위치와 목표 위치가 거의 같으면 회전하지 않음
       if (Math.abs(current - optimizedTarget) < 0.001) {
-        console.log('Already at target position');
+        // console.log('Already at target position');
         return;
       }
       

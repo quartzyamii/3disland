@@ -9,7 +9,7 @@ const StarBottle = (props) => {
      const StarBottleRef = useRef(); 
   
     const { nodes, materials } = useGLTF(StarBottleScene);  
-    console.log(nodes, materials);
+    // console.log(nodes, materials);
 
   return (
     <a.group ref={StarBottleRef} {...props}> 

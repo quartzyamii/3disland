@@ -11,7 +11,7 @@ import SightScene from '/assets/3d/Sight.gltf?url';
 
 const Sight = forwardRef((props, ref) => {  
   const { nodes, materials } = useGLTF(SightScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
   return (
     <a.group ref={ref} {...props}>

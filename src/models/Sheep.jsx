@@ -13,7 +13,7 @@ import SheepScene from '/assets/3d/Sheep.gltf?url';
 
 const Sheep = forwardRef((props, ref) => {  
   const { nodes, materials } = useGLTF(SheepScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
 
   return (

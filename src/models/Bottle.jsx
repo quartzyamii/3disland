@@ -9,7 +9,7 @@ import BottleScene from '/assets/3d/Bottle.gltf?url';
 const Bottle = forwardRef((props, ref) => {
   // GLTF 모델 로딩
   const { nodes, materials } = useGLTF(BottleScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
   // 환경 맵(반사와 굴절을 위해 필요)
   const envMap = new THREE.CubeTextureLoader().load([

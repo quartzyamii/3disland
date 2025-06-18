@@ -13,7 +13,7 @@ import TripScene from '/assets/3d/Trip.gltf?url';
 
 const Trip = forwardRef((props, ref) => {  
   const { nodes, materials } = useGLTF(TripScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
     // Three.js 유리 재질 직접 생성
     //  줄무늬 왜곡 제거한 간단 투명 재질

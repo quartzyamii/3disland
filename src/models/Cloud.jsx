@@ -8,7 +8,7 @@ const Cloud = (props) => {
   const CloudRef = useRef();  // CloudRef를 useRef로 정의
 
   const { nodes, materials } = useGLTF(CloudScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
   return (
     <a.group ref={CloudRef} {...props}>

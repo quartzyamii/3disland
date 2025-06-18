@@ -13,7 +13,7 @@ import KeyRingScene from '/assets/3d/KeyRing.gltf?url';
 
 const KeyRing = forwardRef((props, ref) => {  
   const { nodes, materials } = useGLTF(KeyRingScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
   return (
     <a.group ref={ref} {...props}>

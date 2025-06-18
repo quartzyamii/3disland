@@ -12,7 +12,7 @@ import TimeCapsuleScene from '/assets/3d/TimeCapsule.gltf?url';
 
 const TimeCapsule = forwardRef((props, ref) => {  
   const { nodes, materials } = useGLTF(TimeCapsuleScene);  
-  console.log(nodes, materials);
+  // console.log(nodes, materials);
 
   return (
      <a.group ref={ref} {...props}>

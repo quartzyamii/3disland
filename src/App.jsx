@@ -118,29 +118,33 @@ const App = () => {
         
         /* 튜토리얼 이미지 전용 스타일 */
         .tutorial-image {
-          position: absolute;
+         position: absolute;
           left: 50%;
           transform: translateX(-50%);
           z-index: 20;
-          top: 300px;
-          width: 80%;
+          top: 430px;
+          display: inline-block; /* 이미지 크기에 맞게 div 크기 조정 */
           text-align: center;
-          --scale: 0.5;
+          width: auto; /* 불필요한 width 제거 */
+          height: auto; /* 불필요한 height 제거 */
+          padding: 0; /* 불필요한 padding 제거 */
+          margin: 0; /* 불필요한 margin 제거 */
+          --scale: 0.8;
         }
         
         /* 시작 버튼 전용 스타일 */
         .start-button {
-          cursor: pointer;
+          cursor: grab;
           transition: all 0.3s ease;
           filter: drop-shadow(0 10px 25px rgba(0,0,0,0.3));
           max-width: 400px;
           height: auto;
-          transform: scale(0.7) translateY(-30px); /* 기본 상태 + 위로 30px 이동 */
+          transform: scale(0.7) translateY(-30px);
         }
 
         .start-button:hover {
-          transform: scale(0.8) translateY(-30px); /* 확대 + 위치 유지 */
-          filter: drop-shadow(0 15px 35px rgba(0,0,0,0.4)); /* 그림자도 강화 */
+          transform: scale(0.8) translateY(-30px);
+          filter: drop-shadow(0 15px 35px rgba(0,0,0,0.4));
         }
       `}
     </style>
@@ -177,6 +181,7 @@ const App = () => {
       alt="START"
       onClick={handleStartClick}
       className="start-button"
+      draggable={false}
     />
   );
 
@@ -214,7 +219,7 @@ const App = () => {
       <TutorialImage /> 
       
       
-      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 z-10">
+      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 z-10 w-fit">
         {!isAssetsLoaded ? <LoadingProgress /> : <StartButton />}
       </div>
     </div>

@@ -117,10 +117,12 @@ const App = () => {
           left: 50%;
           transform: translateX(-50%);
           z-index: 20;
-          top: 300px;
+          top: 530px;
           width: 80%;
+          max-width: 700px; /* 최대 너비 제한 */
+          max-height: 400px; /* 최대 높이 제한 */
           text-align: center;
-          --scale: 0.5;
+          --scale: 1;
           opacity: 0;
         }
         

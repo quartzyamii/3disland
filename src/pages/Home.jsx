@@ -326,11 +326,12 @@ const Home = () => {
   return (
     <section className="w-full h-screen relative"
     style={{
-      backgroundImage: 'url("/assets/images/SKY2.png")',
+      backgroundImage: `url("/assets/images/${currentPopupObject === 'trip' ? 'TripBackground.png' : 'SKY2.png'}")`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       position: 'relative',
-      zIndex: 1
+      zIndex: 1,
+      transition: 'background-image 0.5s ease-in-out'
     }}>
       <Star />
 

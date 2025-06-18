@@ -66,7 +66,7 @@ const RaycasterHandler = ({ objectRefs, setIsIntersecting, setHoveredObject }) =
         }
         
         hoveredObjectName = objectName || 'Unknown';
-        console.log('Hovered object:', hoveredObjectName, intersectedObject);
+        // console.log('Hovered object:', hoveredObjectName, intersectedObject);
       }
     }
 
@@ -189,26 +189,46 @@ const Home = () => {
   const ANIMATION_DURATION = 1000; // ms, 더 부드럽게
   const animationStart = useRef(null);
 
-  const animateRotation = (timestamp, clickedObjectName) => {
-    if (!IslandRef.current || !currentTargetRotation) return;
+  // 애니메이션 함수 수정: 목표 회전값을 직접 매개변수로 받음
+  const animateRotation = (timestamp, clickedObjectName, targetRotation = null) => {
+    console.log('Animation frame called', timestamp, clickedObjectName, targetRotation);
+    
+    if (!IslandRef.current) return;
+    
+    // 목표 회전값 결정: 직접 전달된 값 또는 상태값 사용
+    const finalTargetRotation = targetRotation !== null ? targetRotation : currentTargetRotation;
+    
+    if (finalTargetRotation === null) {
+      console.log('No target rotation, animation canceled');
+      return;
+    }
+    
     if (!animationStart.current) animationStart.current = timestamp;
 
     const elapsed = timestamp - animationStart.current;
     const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
     const easedProgress = customEase(progress);
-    const newRotation = initialRotation.current + (currentTargetRotation - initialRotation.current) * easedProgress;
+    const newRotation = initialRotation.current + (finalTargetRotation - initialRotation.current) * easedProgress;
+    
+    console.log('Animating rotation', {
+      progress,
+      initialRotation: initialRotation.current,
+      targetRotation: finalTargetRotation,
+      newRotation
+    });
+    
     IslandRef.current.rotation.y = newRotation;
 
     if (progress > 0.7 && !popupShown.current) {
       setShowPopup(true);
-      setCurrentPopupObject(clickedObjectName); // 클릭된 오브젝트 이름 직접 사용
+      setCurrentPopupObject(clickedObjectName);
       popupShown.current = true;
     }
 
     if (progress < 1) {
-      animationFrame.current = requestAnimationFrame((ts) => animateRotation(ts, clickedObjectName));
+      animationFrame.current = requestAnimationFrame((ts) => animateRotation(ts, clickedObjectName, finalTargetRotation));
     } else {
-      IslandRef.current.rotation.y = currentTargetRotation;
+      IslandRef.current.rotation.y = finalTargetRotation;
       setIsRotating(false);
       animationStart.current = null;
       setCurrentTargetRotation(null);
@@ -220,19 +240,24 @@ const Home = () => {
   };
 
   const handleCanvasClick = (e) => {
-    if (isRotating || showPopup) return;
+    // 디버깅을 위한 초기 로그
+    console.log('Canvas clicked!', e.target);
     
-    // console.log('Canvas clicked!', e.target);
+    // 이미 회전 중이거나 팝업이 열려 있으면 클릭 처리 중단
+    if (isRotating || showPopup) {
+      console.log('Already rotating or popup showing, ignoring click');
+      return;
+    }
     
     // 간단한 방법: 현재 호버된 오브젝트가 있는지 확인
     if (isIntersecting && hoveredObject && IslandRef.current) {
-      // console.log('Clicked object:', hoveredObject);
+      console.log('Clicked object:', hoveredObject);
       
       // 목표 회전 각도 결정
       const targetRotation = targetRotations[hoveredObject];
       
       if (targetRotation === undefined) {
-        // console.log('No target rotation for:', hoveredObject);
+        console.log('No target rotation for:', hoveredObject);
         return;
       }
       
@@ -241,22 +266,35 @@ const Home = () => {
       // getOptimizedRotation 함수를 사용하여 최적화된 회전 계산
       const optimizedTarget = getOptimizedRotation(current, targetRotation);
       
-      // console.log('Current rotation:', current, 'Target:', optimizedTarget);
+      console.log('Current rotation:', current, 'Target:', optimizedTarget);
       
-      // 현재 위치와 목표 위치가 거의 같으면 회전하지 않음
+      // 현재 위치와 목표 위치가 거의 같으면 회전 없이 바로 팝업 표시
       if (Math.abs(current - optimizedTarget) < 0.001) {
-        // console.log('Already at target position');
+        console.log('Already at target position, showing popup');
+        setShowPopup(true);
+        setCurrentPopupObject(hoveredObject);
         return;
       }
       
+      // 상태 업데이트
       setCurrentTargetRotation(optimizedTarget);
       setIsRotating(true);
       setIsIntersecting(false);
+      
+      // 참조값 직접 업데이트
       popupShown.current = false;
       initialRotation.current = current;
       animationStart.current = null;
       
-      requestAnimationFrame((ts) => animateRotation(ts, hoveredObject));
+      // 즉시 애니메이션 시작 (목표 회전값을 직접 전달)
+      console.log('Starting animation immediately with target:', optimizedTarget);
+      requestAnimationFrame((ts) => {
+        if (IslandRef.current) {
+          animateRotation(ts, hoveredObject, optimizedTarget);
+        }
+      });
+    } else {
+      console.log('No intersection or hovered object');
     }
   };
 

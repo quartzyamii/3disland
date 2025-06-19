@@ -373,7 +373,7 @@ const Home = () => {
       {currentPopupObject === 'trip' && !isClosing && <TripFishAnimation />}
       
       {/* 전체 화면에 Star 컴포넌트 렌더링 - Popup.jsx가 열릴 때만 색상 변경 */}
-      <Star color={(currentPopupObject === 'glowstick' && !isClosing) ? '#1d2669' : undefined} />
+      <Star color={(currentPopupObject === 'glowstick' && !isClosing) ? '#0057a9' : undefined} />
 
       {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}
       {showPopup && currentPopupObject && (

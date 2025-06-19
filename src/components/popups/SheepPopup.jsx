@@ -19,6 +19,14 @@ const SheepPopup = ({ onClose, isClosing = false }) => {
     config: { duration: 600 },
   });
 
+  // 별 애니메이션 추가
+  const starFade = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: isClosing ? 0 : 0.8 },
+    delay: isClosing ? 0 : 200,
+    config: { duration: 800 },
+  });
+
   return (
     <>
       <style>
@@ -73,8 +81,84 @@ const SheepPopup = ({ onClose, isClosing = false }) => {
           .animate-float-image {
             animation: float-image 5s ease-in-out infinite;
           }
+          
+          /* 배경 별 애니메이션 */
+          @keyframes star-float-1 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+          }
+          
+          @keyframes star-float-2 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+          }
+          
+          @keyframes star-float-3 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(8deg); }
+          }
+          
+          @keyframes star-float-4 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(-8deg); }
+          }
+          
+          .star-float-1 {
+            animation: star-float-1 6s ease-in-out infinite;
+          }
+          
+          .star-float-2 {
+            animation: star-float-2 7s ease-in-out infinite 0.5s;
+          }
+          
+          .star-float-3 {
+            animation: star-float-3 5s ease-in-out infinite 1s;
+          }
+          
+          .star-float-4 {
+            animation: star-float-4 8s ease-in-out infinite 1.5s;
+          }
         `}
       </style>
+      
+      {/* 배경 별 이미지들 */}
+      <animated.div style={starFade} className="fixed inset-0 z-40 pointer-events-none">
+        {/* 별 1 - 왼쪽 위 */}
+        <div className="absolute top-[10%] left-[5%]">
+          <img 
+            src="/assets/images/BackgroundStar.png" 
+            alt="Background Star" 
+            className="w-24 h-24 star-float-1 opacity-100"
+          />
+        </div>
+        
+        {/* 별 2 - 오른쪽 위 */}
+        <div className="absolute top-[30%] right-[5%]">
+          <img 
+            src="/assets/images/BackgroundStar.png" 
+            alt="Background Star" 
+            className="w-32 h-32 star-float-2 opacity-100"
+          />
+        </div>
+        
+        {/* 별 3 - 왼쪽 아래 */}
+        <div className="absolute top-[30%] left-[30%]">
+          <img 
+            src="/assets/images/BackgroundStar.png" 
+            alt="Background Star" 
+            className="w-10 h-10 star-float-3 opacity-100"
+          />
+        </div>
+        
+        {/* 별 4 - 오른쪽 아래 */}
+        <div className="absolute top-[5%] right-[28%]">
+          <img 
+            src="/assets/images/BackgroundStar.png" 
+            alt="Background Star" 
+            className="w-10 h-10 star-float-4 opacity-100"
+          />
+        </div>
+      </animated.div>
       
       {/* 2004 년도 텍스트 */}
       <animated.div 

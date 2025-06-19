@@ -222,9 +222,11 @@ const Home = () => {
     IslandRef.current.rotation.y = newRotation;
 
     if (progress > 0.7 && !popupShown.current) {
-      setShowPopup(true);
+      // 팝업 표시 및 클릭된 오브젝트 설정
       setCurrentPopupObject(clickedObjectName);
+      setShowPopup(true);
       popupShown.current = true;
+      console.log('Setting popup object to:', clickedObjectName);
     }
 
     if (progress < 1) {
@@ -273,6 +275,7 @@ const Home = () => {
       // 현재 위치와 목표 위치가 거의 같으면 회전 없이 바로 팝업 표시
       if (Math.abs(current - optimizedTarget) < 0.001) {
         console.log('Already at target position, showing popup');
+        console.log('Showing popup for:', hoveredObject);
         setShowPopup(true);
         setCurrentPopupObject(hoveredObject);
         return;
@@ -302,17 +305,26 @@ const Home = () => {
 
   const handleClosePopup = () => {
     // exit 애니메이션을 위해 isClosing 상태를 true로 설정
+    console.log('Closing popup:', currentPopupObject);
     setIsClosing(true);
     
-    // 애니메이션 시간 후에 팝업을 실제로 닫음
+    // 즉시 Star 색상과 배경 이미지를 원래대로 되돌리기 위해 currentPopupObject 상태 변경
+    // 이렇게 하면 Star.jsx의 색상 변경과 배경 이미지 변경이 동시에 시작됨
     setTimeout(() => {
+      console.log('Returning Star color to default');
+      // 팝업을 실제로 닫음
       setShowPopup(false);
       setCurrentPopupObject(null); // 팝업 오브젝트 초기화
-      setIsClosing(false); // 애니메이션 종료 상태 초기화
-      if (animationFrame.current) {
-        cancelAnimationFrame(animationFrame.current);
-      }
-    }, 600); // 애니메이션 지속 시간과 맞춤
+      
+      // 팝업이 완전히 닫히고 애니메이션이 끝난 후에 isClosing 상태 초기화
+      setTimeout(() => {
+        setIsClosing(false); // 애니메이션 종료 상태 초기화
+        console.log('Popup fully closed');
+        if (animationFrame.current) {
+          cancelAnimationFrame(animationFrame.current);
+        }
+      }, 100);
+    }, 500); // 애니메이션 지속 시간과 맞춤 (배경 및 Star 트랜지션과 동일하게 0.5초)
   };
 
   useEffect(() => {
@@ -328,22 +340,25 @@ const Home = () => {
     <section className="w-full h-screen relative"
     style={{
       backgroundImage: `url("/assets/images/${
-        currentPopupObject === 'trip' ? 'TripBackground.png' : 
-        currentPopupObject === 'sheep' ? 'SheepBackground001.png' : 
-        currentPopupObject === 'glowstick' ? 'GlowstickBackground.png' :
-        currentPopupObject === 'keyRing' ? 'KeyRingBackground001.png' :
-        currentPopupObject === 'bottle' ? 'BottleBackground001.png' :
+        // isClosing 상태일 때도 배경 이미지를 유지하여 부드러운 전환 효과 제공
+        (currentPopupObject === 'trip' && !isClosing) ? 'TripBackground.png' : 
+        (currentPopupObject === 'sheep' && !isClosing) ? 'SheepBackground001.png' : 
+        (currentPopupObject === 'glowstick' && !isClosing) ? 'GlowstickBackground.png' :
+        (currentPopupObject === 'keyRing' && !isClosing) ? 'KeyRingBackground001.png' :
+        (currentPopupObject === 'bottle' && !isClosing) ? 'BottleBackground001.png' :
         'SKY2.png'
       }")`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       position: 'relative',
       zIndex: 1,
-      transition: 'background-image 0.5s ease-in-out'
+      transition: 'background-image 500ms ease-out'
     }}>
       {/* 움직이는 물고기 애니메이션 - TripPopup일 때만 표시 */}
-      {currentPopupObject === 'trip' && <TripFishAnimation />}
-      <Star />
+      {currentPopupObject === 'trip' && !isClosing && <TripFishAnimation />}
+      
+      {/* 전체 화면에 Star 컴포넌트 렌더링 - Popup.jsx가 열릴 때만 색상 변경 */}
+      <Star color={(currentPopupObject === 'glowstick' && !isClosing) ? '#1d2669' : undefined} />
 
       {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}
       {showPopup && currentPopupObject && (

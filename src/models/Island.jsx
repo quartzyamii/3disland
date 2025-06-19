@@ -14,7 +14,7 @@ import TimeCapsule from './TimeCapsule';
 import Trip from './Trip';
 import Sight from './Sight';
 
-const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, bottleRef, sheepRef, keyRingRef, timeCapsuleRef, tripRef, sightRef, ...props}, ref) => {
+const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, bottleRef, sheepRef, keyRingRef, timeCapsuleRef, tripRef, sightRef, isSightFishAnimating = false, ...props}, ref) => {
     // ===== 상태 및 참조 =====
     const { gl, viewport, camera } = useThree();
     const { nodes, materials } = useGLTF(IslandScene);
@@ -630,6 +630,7 @@ const Island = forwardRef(({isRotating, setIsRotating, setShowPopup, circleRef, 
                 castShadow
                 receiveShadow
                 name="sight"
+                isAnimating={isSightFishAnimating} // 물고기 애니메이션 상태 전달
       />
 
       <Glowstick 

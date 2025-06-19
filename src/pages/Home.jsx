@@ -95,6 +95,7 @@ const Home = () => {
   const [isClosing, setIsClosing] = useState(false);  // 애니메이션 종료 상태 추가
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hoveredObject, setHoveredObject] = useState(null);
+  const [isSightFishAnimating, setIsSightFishAnimating] = useState(false); // Sight 물고기 애니메이션 상태 추가
   
   // 6개 오브젝트 각각의 ref
   const bottleRef = useRef();
@@ -308,6 +309,11 @@ const Home = () => {
     console.log('Closing popup:', currentPopupObject);
     setIsClosing(true);
     
+    // SightPopup이 닫힐 때 물고기 애니메이션 중지
+    if (currentPopupObject === 'sight') {
+      setIsSightFishAnimating(false);
+    }
+    
     // 즉시 Star 색상과 배경 이미지를 원래대로 되돌리기 위해 currentPopupObject 상태 변경
     // 이렇게 하면 Star.jsx의 색상 변경과 배경 이미지 변경이 동시에 시작됨
     setTimeout(() => {
@@ -326,6 +332,13 @@ const Home = () => {
       }, 100);
     }, 500); // 애니메이션 지속 시간과 맞춤 (배경 및 Star 트랜지션과 동일하게 0.5초)
   };
+  
+  // Sight 팝업이 열릴 때 물고기 애니메이션 활성화
+  useEffect(() => {
+    if (currentPopupObject === 'sight' && !isClosing) {
+      setIsSightFishAnimating(true);
+    }
+  }, [currentPopupObject, isClosing]);
 
   useEffect(() => {
     return () => {
@@ -424,6 +437,7 @@ const Home = () => {
             timeCapsuleRef={timeCapsuleRef}
             tripRef={tripRef}
             sightRef={sightRef}
+            isSightFishAnimating={isSightFishAnimating} // 물고기 애니메이션 상태 전달
           />
           <Cloud 
           position={[0, -11, -48]} 

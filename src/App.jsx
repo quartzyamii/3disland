@@ -7,7 +7,7 @@ const ASSETS_TO_PRELOAD = [
   '/assets/images/SKY2.png',
   '/assets/images/BACKGROUND004.png',
 ];
-const FADE_OUT_DURATION = 1200;
+const FADE_OUT_DURATION = 600; // 더 빠른 애니메이션을 위해 1200에서 800ms로 변경
 
 const App = () => {
   // 상태 관리
@@ -104,7 +104,7 @@ const App = () => {
           }
         }
         
-        /* 페이드아웃 애니메이션 */
+        /* 페이드아웃 애니메이션 - 더 빠르게 적용 */
         @keyframes fadeOutBlur {
           0% {
             opacity: 1;
@@ -235,10 +235,10 @@ const App = () => {
     </div>
   );
 
-  // 랜딩 오버레이 컴포넌트
+  // 랜딩 오버레이 컴포넌트 //속도적용
   const LandingOverlay = () => (
     <div 
-      className={`fixed inset-0 z-[60] flex flex-col items-center justify-center text-white transition-all duration-[1200ms] ease-in-out ${
+      className={`fixed inset-0 z-[60] flex flex-col items-center justify-center text-white transition-all duration-[600ms] ease-in-out ${
         isLandingFadingOut ? 'opacity-0' : 'opacity-100'
       }`}
       style={{
@@ -246,7 +246,7 @@ const App = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        animation: isLandingFadingOut ? 'fadeOutBlur 1.2s ease-in-out forwards' : 'none'
+        animation: isLandingFadingOut ? 'fadeOutBlur 0.6s ease-in-out forwards' : 'none'
       }}
     >
       <div className="w-full h-full flex flex-col items-center justify-center">

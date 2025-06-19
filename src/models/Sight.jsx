@@ -111,14 +111,16 @@ const Sight = forwardRef(({ isAnimating = false, ...props }, ref) => {
       currentAngles.current.fish += rotationSpeed;
       currentAngles.current.mainFish += rotationSpeed;
       
-      // 회전 반경 계산
+      // 회전 반경 계산 - 더 좁은 반경으로 조정 (기존 반경의 70%로 줄임)
       const fishDx = initialFishPos.current.x - centerX;
       const fishDz = initialFishPos.current.z - centerZ;
-      const fishRadius = Math.sqrt(fishDx * fishDx + fishDz * fishDz);
+      const originalFishRadius = Math.sqrt(fishDx * fishDx + fishDz * fishDz);
+      const fishRadius = originalFishRadius * 0.7; // 반경을 70%로 줄임
       
       const mainFishDx = initialMainFishPos.current.x - centerX;
       const mainFishDz = initialMainFishPos.current.z - centerZ;
-      const mainFishRadius = Math.sqrt(mainFishDx * mainFishDx + mainFishDz * mainFishDz);
+      const originalMainFishRadius = Math.sqrt(mainFishDx * mainFishDx + mainFishDz * mainFishDz);
+      const mainFishRadius = originalMainFishRadius * 0.7; // 반경을 70%로 줄임
       
       // Fish 위치 계산 및 업데이트
       const fishAngleNow = currentAngles.current.fish;

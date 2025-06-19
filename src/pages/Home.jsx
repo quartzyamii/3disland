@@ -10,6 +10,7 @@ import TimeCapsulePopup from '../components/popups/TimeCapsulePopup';
 import TripPopup from '../components/popups/TripPopup';
 import SightPopup from '../components/popups/SightPopup';
 import Star from '../components/Star';
+import TripFishAnimation from '../components/TripFishAnimation';
 
 // import Sky from '../models/sky';
 import Island from '../models/Island';
@@ -340,6 +341,8 @@ const Home = () => {
       zIndex: 1,
       transition: 'background-image 0.5s ease-in-out'
     }}>
+      {/* 움직이는 물고기 애니메이션 - TripPopup일 때만 표시 */}
+      {currentPopupObject === 'trip' && <TripFishAnimation />}
       <Star />
 
       {/* Popup 렌더링 - currentPopupObject에 따라 다른 팝업을 렌더링 */}

@@ -18,6 +18,22 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
     delay: isClosing ? 0 : 300,
     config: { duration: 600 },
   });
+  
+  // ICANDOIT 이미지를 위한 페이드인 애니메이션 (뿅 효과 제거)
+  const fadeInImage = useSpring({
+    from: { 
+      opacity: 0
+    },
+    to: { 
+      opacity: isClosing ? 0 : 1
+    },
+    delay: isClosing ? 0 : 600, // 다른 애니메이션 이후에 나타나도록
+    config: { 
+      duration: 800 // 부드러운 페이드인
+    },
+  });
+
+
 
   return (
     <>
@@ -73,10 +89,25 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
           .animate-float-image {
             animation: float-image 5s ease-in-out infinite;
           }
+          
+          /* ICANDOIT 이미지 위아래로만 동동 떠다니는 애니메이션 */
+          @keyframes float-icandoit {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(2px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(2px); }
+            100% { transform: translateY(0); }
+          }
+          
+          .animate-float-only {
+            animation: float-icandoit 5s ease-in-out infinite;
+          }
+          
+
         `}
       </style>
       
-      {/* 2022 년도 텍스트 */}
+      {/* 2019 년도 텍스트 */}
       <animated.div 
         style={fadeIn}
         className="fixed top-48 left-1/2 transform -translate-x-1/2 z-50"
@@ -101,6 +132,21 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
         </div>
       </animated.div>
       
+      {/* ICANDOIT 이미지 추가 - 페이드인 후 위아래로만 동동 떠다님 */}
+      <animated.div 
+        style={fadeInImage}
+        className="fixed top-[30%] left-1/2 transform -translate-x-1/2 z-50"
+      >
+        <img
+          src="/assets/images/ICANDOIT001.png"
+          alt="ICANDOIT"
+          className="w-[320px] h-auto animate-float-only"
+          style={{ 
+            // filter: 'drop-shadow(0px 10px 25px rgba(56, 189, 248, 0.5))',
+            marginLeft: '-10px' // 이미지를 왼쪽으로 이동
+          }}
+        />
+      </animated.div>
 
     {/* 이미지 추가 */}
           {/* TimeCapule 팝업 */}
@@ -118,7 +164,7 @@ const TimeCapsulePopup = ({ onClose, isClosing = false }) => {
               {/* 닫기 버튼 - 이미지 내부에 위치 */}
               <button
                 onClick={onClose}
-                className="absolute top-9 right-12 hover:bg-opacity-40 transition-all duration-300 animate-float-image "
+                className="absolute top-14 right-12 hover:bg-opacity-40 transition-all duration-300 animate-float-image "
               >
                 <img 
                   src="/assets/images/CloseButton001.png" 

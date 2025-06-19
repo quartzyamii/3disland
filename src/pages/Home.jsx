@@ -346,6 +346,8 @@ const Home = () => {
         (currentPopupObject === 'glowstick' && !isClosing) ? 'GlowstickBackground.png' :
         (currentPopupObject === 'keyRing' && !isClosing) ? 'KeyRingBackground001.png' :
         (currentPopupObject === 'bottle' && !isClosing) ? 'BottleBackground001.png' :
+        (currentPopupObject === 'timeCapsule' && !isClosing) ? 'TimeCapsuleBackground001.png' :
+         (currentPopupObject === 'sight' && !isClosing) ? 'TimeCapsuleBackground001.png' :
         'SKY2.png'
       }")`,
       backgroundSize: 'cover',

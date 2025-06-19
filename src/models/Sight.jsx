@@ -53,19 +53,21 @@ const Sight = forwardRef((props, ref) => {
       <mesh
         castShadow
         receiveShadow
+        geometry={nodes.Sight.geometry}
+        material={materials.Sight}
+        position={[0, 0.485, 0.063]}
+      />
+      
+      <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.MainFish.geometry}
         material={materials.MainFish}
         position={[-0.527, 0.223, -1.606]}
         rotation={[0, Math.PI / 2, 0]}
         scale={[0.037, 0.127, 0.095]}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Sight.geometry}
-        material={materials.Sight}
-        position={[0, 0.485, 0.063]}
-      />
+      
       <mesh
         castShadow
         receiveShadow
@@ -75,13 +77,13 @@ const Sight = forwardRef((props, ref) => {
         rotation={[0, Math.PI / 2, 0]}
         scale={[0.037, 0.127, 0.095]}
       />
-      <mesh
+      {/* <mesh
         castShadow
         receiveShadow
         geometry={nodes.Line.geometry}
         material={materials.Line}
         scale={0.993}
-      />
+      /> */}
     </a.group>
   )
 });

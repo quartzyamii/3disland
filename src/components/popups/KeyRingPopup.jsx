@@ -18,6 +18,20 @@ const KeyRingPopup = ({ onClose, isClosing = false }) => {
         delay: isClosing ? 0 : 300,
         config: { duration: 600 },
       });
+      
+      // KeyRingEffect 이미지를 위한 페이드인 애니메이션
+      const fadeInEffect = useSpring({
+        from: { 
+          opacity: 0
+        },
+        to: { 
+          opacity: isClosing ? 0 : 1
+        },
+        delay: isClosing ? 0 : 600,
+        config: { 
+          duration: 800 // 부드러운 페이드인
+        },
+      });
 
   return (
     <>
@@ -73,6 +87,19 @@ const KeyRingPopup = ({ onClose, isClosing = false }) => {
           .animate-float-image {
             animation: float-image 5s ease-in-out infinite;
           }
+          
+          /* KeyRingEffect 이미지 위아래로 둥둥 떠다니는 애니메이션 */
+          @keyframes float-keyring-effect {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(-15px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
+          }
+          
+          .animate-float-effect {
+            animation: float-keyring-effect 4s ease-in-out infinite;
+          }
         `}
       </style>
       
@@ -100,9 +127,26 @@ const KeyRingPopup = ({ onClose, isClosing = false }) => {
           </h1>
         </div>
       </animated.div>
+      
+      {/* KeyRingEffect 이미지 추가 - 페이드인 후 위아래로 동동 떠다님 */}
+      <animated.div 
+        style={fadeInEffect}
+        className="fixed top-[5%] left-1/2 transform -translate-x-1/2 z-50 overflow-hidden"
+      >
+        <img
+          src="/assets/images/KeyRingEffect.png"
+          alt="KeyRingEffect"
+          className="w-[4400px] h-auto opacity-60 animate-float-effect"
+          style={{ 
+            // filter: 'drop-shadow(0px 10px 25px rgba(56, 189, 248, 0.5))',
+            maxWidth: '100vw', // 뷰포트 너비를 넘지 않게 설정
+            objectFit: 'contain'
+          }}
+        />
+      </animated.div>
 
     {/* 이미지 추가 */}
-                            {/* TimeCapule 팝업 */}
+                            {/* KeyRing 팝업 */}
                             <animated.div 
                               style={slideUp}
                               className="fixed top-[60%] inset-x-0 z-50 flex justify-center"

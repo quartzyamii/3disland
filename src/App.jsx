@@ -7,7 +7,7 @@ const ASSETS_TO_PRELOAD = [
   '/assets/images/SKY2.png',
   '/assets/images/BACKGROUND004.png',
 ];
-const FADE_OUT_DURATION = 600; // 더 빠른 애니메이션을 위해 1200에서 800ms로 변경
+const FADE_OUT_DURATION = 300; // 더 빠른 애니메이션을 위해 1200에서 800ms로 변경
 
 const App = () => {
   // 상태 관리
@@ -55,16 +55,17 @@ const App = () => {
     setTimeout(() => {
       setShowLandingOverlay(false);
       setIsLandingFadingOut(false);
-      setIsInitialLoad(false); // 초기 로드가 아님을 표시
+      // setIsInitialLoad(false); // 초기 로드가 아님을 표시
     }, FADE_OUT_DURATION);
   };
 
   // 로고 클릭 핸들러
   const handleLogoClick = () => {
-    // 오버레이 보이기 전에 페이드 아웃 상태 초기화
-    setIsLandingFadingOut(false);
+    // 애니메이션 없이 즉시 랜딩 오버레이 표시
     setShowLandingOverlay(true);
-    // 로고를 클릭해서 다시 열 때는 애니메이션 없이 바로 표시
+    setIsLandingFadingOut(false);
+    // // 초기 로드가 아님을 명시하여 애니메이션이 적용되지 않도록 함
+    // setIsInitialLoad(false);
   };
 
   // 통합된 스타일 정의
@@ -117,6 +118,28 @@ const App = () => {
           100% {
             opacity: 0;
             filter: blur(5px);
+          }
+        }
+        
+        /* 페이드인 애니메이션 - 빠르고 부드럽게 */
+        @keyframes fadeInBlur {
+          0% {
+            opacity: 0;
+            filter: blur(5px);
+          }
+
+          25%
+          {
+            opacity: 1;
+            filter: blur(2px);
+          }
+          50% {
+            opacity: 1;
+            filter: blur(2px);
+          }
+          100% {
+            opacity: 1;
+            filter: blur(0);
           }
         }
         
@@ -184,15 +207,15 @@ const App = () => {
         
         /* 애니메이션 클래스 */
         .animate-title {
-          animation: slideUp 1s ease-out 0s forwards, none; /* 0초 딜레이로 변경 (즉시 시작) */
+          animation: slideUp 1s ease-out 0.3s forwards, none; /* 0초 딜레이로 변경 (즉시 시작) */
         }
         
         .animate-tutorial {
-          animation: slideUp 1s ease-out 1s forwards, none;
+          animation: slideUp 1s ease-out 1.3s forwards, none;
         }
         
         .animate-button {
-          animation: slideUp 1s ease-out 2s forwards, none;
+          animation: slideUp 1s ease-out 2.3s forwards, none;
         }
       `}
     </style>
@@ -238,7 +261,7 @@ const App = () => {
   // 랜딩 오버레이 컴포넌트 //속도적용
   const LandingOverlay = () => (
     <div 
-      className={`fixed inset-0 z-[60] flex flex-col items-center justify-center text-white transition-all duration-[600ms] ease-in-out ${
+      className={`fixed inset-0 z-[60] flex flex-col items-center justify-center text-white transition-all duration-[300ms] ease-in-out ${
         isLandingFadingOut ? 'opacity-0' : 'opacity-100'
       }`}
       style={{
@@ -246,7 +269,9 @@ const App = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        animation: isLandingFadingOut ? 'fadeOutBlur 0.6s ease-in-out forwards' : 'none'
+        animation: isLandingFadingOut 
+          ? 'fadeOutBlur 0.3s ease-in-out forwards' 
+          : 'none' // 모든 페이드인 애니메이션 제거
       }}
     >
       <div className="w-full h-full flex flex-col items-center justify-center">
@@ -279,10 +304,33 @@ const App = () => {
             )}
           </>
         ) : (
+          // 로고 클릭 시 즉시 표시되는 컴포넌트들 (애니메이션 없음)
           <>
-            <TitleImage />
-            <TutorialImage />
-            {isAssetsLoaded && <StartButton />}
+            <div className="title-image">
+              <img 
+                src="/assets/images/MemoryIsland001.png" 
+                alt="memoryislandTitle"
+                className="animate-float"
+              />
+            </div>
+            <div className="tutorial-image">
+              <img 
+                src="/assets/images/Modal2.png" 
+                alt="정든 사울과의 이별, 추억의 아카이빙"
+                className="animate-float"
+              />
+            </div>
+            {isAssetsLoaded && (
+              <div className="start-button-container">
+                <img 
+                  src="/assets/images/START001.png"
+                  alt="START"
+                  onClick={handleStartClick}
+                  className="start-button"
+                  draggable={false}
+                />
+              </div>
+            )}
           </>
         )}
       </div>

@@ -329,10 +329,10 @@ const Home = () => {
     style={{
       backgroundImage: `url("/assets/images/${
         currentPopupObject === 'trip' ? 'TripBackground.png' : 
-        currentPopupObject === 'sheep' ? 'SheepBackground.png' : 
+        currentPopupObject === 'sheep' ? 'SheepBackground001.png' : 
         currentPopupObject === 'glowstick' ? 'GlowstickBackground.png' :
-        currentPopupObject === 'keyRing' ? 'KeyRingBackground.png' :
-        currentPopupObject === 'bottle' ? 'BottleBackground.png' :
+        currentPopupObject === 'keyRing' ? 'KeyRingBackground001.png' :
+        currentPopupObject === 'bottle' ? 'BottleBackground001.png' :
         'SKY2.png'
       }")`,
       backgroundSize: 'cover',

@@ -149,7 +149,7 @@ const App = () => {
           left: 50%;
           transform: translateX(-50%);
           z-index: 20;
-          top: -100px;
+          top: -20px; /* 더 위로 올림 */
           width: 80%;
           text-align: center;
           --scale: 0.8;
@@ -159,16 +159,31 @@ const App = () => {
           opacity: 0;
         }
         
+        /* 반응형 타이틀 위치 */
+        @media (max-height: 800px) {
+          .title-image {
+            top: -10px; /* 더 위로 올림 */
+            width: 70%;
+          }
+        }
+        
+        @media (max-height: 600px) {
+          .title-image {
+            top: -5px; /* 더 위로 올림 */
+            width: 60%;
+          }
+        }
+        
         /* 튜토리얼 이미지 전용 스타일 */
         .tutorial-image {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
           z-index: 20;
-          top: 530px;
+          top: calc(40% - 50px); /* 화면 중앙보다 약간 위에 위치 */
           width: 80%;
           max-width: 700px; /* 최대 너비 제한 */
-          max-height: 400px; /* 최대 높이 제한 */
+          max-height: 350px; /* 최대 높이 제한 */
           text-align: center;
           --scale: 1.1;
         }
@@ -182,7 +197,7 @@ const App = () => {
           cursor: grab;
           transition: all 0.3s ease;
           filter: drop-shadow(0 10px 25px rgba(0,0,0,0.3));
-          max-width: 400px;
+          max-width: 300px; /* 버튼 크기 약간 축소 */
           height: auto;
           transform: scale(0.7) translateY(-30px);
         }
@@ -195,10 +210,39 @@ const App = () => {
         /* 시작 버튼 컨테이너 */
         .start-button-container {
           position: absolute;
-          bottom: 20px;
+          bottom: 8%;  /* 화면 하단에서 8% 위치에 배치 */
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
+          margin-top: 30px; /* 튜토리얼 이미지와의 최소 간격 */
+        }
+        
+        /* 반응형 규칙: 화면 높이가 작을 때 겹침 방지 */
+        @media (max-height: 800px) {
+          .tutorial-image {
+            top: 30%;
+            max-height: 280px;
+          }
+          
+          .start-button-container {
+            bottom: 5%; 
+          }
+        }
+        
+        /* 매우 작은 화면에서의 규칙 */
+        @media (max-height: 600px) {
+          .tutorial-image {
+            top: 20%;
+            max-height: 220px;
+          }
+          
+          .start-button-container {
+            bottom: 3%;
+          }
+          
+          .start-button {
+            max-width: 250px;
+          }
         }
         
         .animate-button {
@@ -274,9 +318,10 @@ const App = () => {
           : 'none' // 모든 페이드인 애니메이션 제거
       }}
     >
-      <div className="w-full h-full flex flex-col items-center justify-center">
+      <div className="w-full h-full flex flex-col items-center relative">
         {isInitialLoad && !isLandingFadingOut ? (
           <>
+            {/* 타이틀 이미지 - 위에 배치 */}
             <div className="title-image animate-title">
               <img 
                 src="/assets/images/MemoryIsland001.png" 
@@ -284,28 +329,35 @@ const App = () => {
                 className="animate-float"
               />
             </div>
-            <div className="tutorial-image animate-tutorial">
-              <img 
-                src="/assets/images/Modal2.png" 
-                alt="정든 사울과의 이별, 추억의 아카이빙"
-                className="animate-float"
-              />
-            </div>
-            {isAssetsLoaded && (
-              <div className="start-button-container animate-button">
+            
+            {/* 컨텐츠 컨테이너 - 튜토리얼과 시작 버튼을 감싸는 컨테이너 */}
+            <div className="flex flex-col items-center justify-center h-full w-full" style={{ paddingTop: '120px' }}>
+              <div className="tutorial-image animate-tutorial">
                 <img 
-                  src="/assets/images/START001.png"
-                  alt="START"
-                  onClick={handleStartClick}
-                  className="start-button"
-                  draggable={false}
+                  src="/assets/images/Modal2.png" 
+                  alt="정든 사울과의 이별, 추억의 아카이빙"
+                  className="animate-float"
                 />
               </div>
-            )}
+              
+              {/* 시작 버튼은 항상 튜토리얼 이미지 아래에 위치 */}
+              {isAssetsLoaded && (
+                <div className="start-button-container animate-button">
+                  <img 
+                    src="/assets/images/START001.png"
+                    alt="START"
+                    onClick={handleStartClick}
+                    className="start-button"
+                    draggable={false}
+                  />
+                </div>
+              )}
+            </div>
           </>
         ) : (
           // 로고 클릭 시 즉시 표시되는 컴포넌트들 (애니메이션 없음)
           <>
+            {/* 타이틀 이미지 - 위에 배치 */}
             <div className="title-image">
               <img 
                 src="/assets/images/MemoryIsland001.png" 
@@ -313,24 +365,30 @@ const App = () => {
                 className="animate-float"
               />
             </div>
-            <div className="tutorial-image">
-              <img 
-                src="/assets/images/Modal2.png" 
-                alt="정든 사울과의 이별, 추억의 아카이빙"
-                className="animate-float"
-              />
-            </div>
-            {isAssetsLoaded && (
-              <div className="start-button-container">
+            
+            {/* 컨텐츠 컨테이너 - 튜토리얼과 시작 버튼을 감싸는 컨테이너 */}
+            <div className="flex flex-col items-center justify-center h-full w-full" style={{ paddingTop: '120px' }}>
+              <div className="tutorial-image">
                 <img 
-                  src="/assets/images/START001.png"
-                  alt="START"
-                  onClick={handleStartClick}
-                  className="start-button"
-                  draggable={false}
+                  src="/assets/images/Modal2.png" 
+                  alt="정든 사울과의 이별, 추억의 아카이빙"
+                  className="animate-float"
                 />
               </div>
-            )}
+              
+              {/* 시작 버튼은 항상 튜토리얼 이미지 아래에 위치 */}
+              {isAssetsLoaded && (
+                <div className="start-button-container">
+                  <img 
+                    src="/assets/images/START001.png"
+                    alt="START"
+                    onClick={handleStartClick}
+                    className="start-button"
+                    draggable={false}
+                  />
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
